@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Admin Dashboard - Campus Food Ordering</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                        "success": "#50E3C2",
+                        "danger": "#D0021B",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+        }
+    </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-[#333333] dark:text-gray-200">
+<div class="relative flex min-h-screen w-full">
+<!-- SideNavBar -->
+<aside class="sticky top-0 h-screen w-64 flex-shrink-0 bg-white dark:bg-background-dark dark:border-r dark:border-gray-800">
+<div class="flex h-full flex-col justify-between p-4">
+<div class="flex flex-col gap-8">
+<div class="flex items-center gap-2 px-3">
+<span class="material-symbols-outlined text-primary text-3xl">fastfood</span>
+<h1 class="text-[#111418] dark:text-white text-lg font-bold">CampusEats</h1>
+</div>
+<div class="flex flex-col gap-4">
+<div class="flex flex-col gap-2">
+<a class="flex items-center gap-3 rounded-lg bg-primary/10 px-3 py-2 text-primary dark:bg-primary/20" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<p class="text-sm font-medium">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800 rounded-lg" href="#">
+<span class="material-symbols-outlined">restaurant_menu</span>
+<p class="text-sm font-medium">Menu Management</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800 rounded-lg" href="#">
+<span class="material-symbols-outlined">group</span>
+<p class="text-sm font-medium">Users</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800 rounded-lg" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<p class="text-sm font-medium">Analytics</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800 rounded-lg" href="#">
+<span class="material-symbols-outlined">settings</span>
+<p class="text-sm font-medium">Settings</p>
+</a>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800 rounded-lg cursor-pointer">
+<span class="material-symbols-outlined">logout</span>
+<p class="text-sm font-medium">Log Out</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 overflow-y-auto">
+<div class="p-8">
+<!-- Header -->
+<header class="flex items-center justify-between pb-6">
+<p class="text-[#111418] dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]">Dashboard</p>
+<div class="flex items-center gap-4">
+<button class="relative rounded-full p-2 text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-danger"></span>
+</button>
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Admin user avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDo4-llCiupEk-fgvfiNlGv2JkCff8_Q16Qc8fMl3oPqIm2st9ycJtR2s9YTavNJ8PQbfTL06WQRiu7CmUeI6gZSstg_o0nFclVoB9QKKfu00wfEZqYTI_sCxAgtnf8LWnlgHoI4JRJANEsMGoVIo10ithyXoWGgI8oIlGjKP6JentscSMxammy8SjZHzC73gX4vAJkKc6GfCmSwH1hYJ8N1kHB7ycZrxhJ26JLna3sAK7zkydwuYERBR-AZ4SbQZ9_1jCRaQaDaX8");'></div>
+<div class="flex flex-col">
+<h1 class="text-[#111418] dark:text-white text-base font-medium leading-normal">Admin Name</h1>
+<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal">Administrator</p>
+</div>
+</div>
+</div>
+</header>
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+<div class="flex flex-col gap-2 rounded-xl bg-white p-6 dark:bg-background-dark dark:border dark:border-gray-800">
+<p class="text-[#111418] dark:text-gray-300 text-base font-medium leading-normal">Total Sales</p>
+<p class="text-[#111418] dark:text-white tracking-light text-2xl font-bold leading-tight">$12,875</p>
+<p class="text-success text-base font-medium leading-normal">+5.4%</p>
+</div>
+<div class="flex flex-col gap-2 rounded-xl bg-white p-6 dark:bg-background-dark dark:border dark:border-gray-800">
+<p class="text-[#111418] dark:text-gray-300 text-base font-medium leading-normal">Today's Orders</p>
+<p class="text-[#111418] dark:text-white tracking-light text-2xl font-bold leading-tight">142</p>
+<p class="text-success text-base font-medium leading-normal">+12.1%</p>
+</div>
+<div class="flex flex-col gap-2 rounded-xl bg-white p-6 dark:bg-background-dark dark:border dark:border-gray-800">
+<p class="text-[#111418] dark:text-gray-300 text-base font-medium leading-normal">Active Users</p>
+<p class="text-[#111418] dark:text-white tracking-light text-2xl font-bold leading-tight">512</p>
+<p class="text-success text-base font-medium leading-normal">+2.0%</p>
+</div>
+<div class="flex flex-col gap-2 rounded-xl bg-white p-6 dark:bg-background-dark dark:border dark:border-gray-800">
+<p class="text-[#111418] dark:text-gray-300 text-base font-medium leading-normal">New Users</p>
+<p class="text-[#111418] dark:text-white tracking-light text-2xl font-bold leading-tight">12</p>
+<p class="text-danger text-base font-medium leading-normal">-3.5%</p>
+</div>
+</div>
+<!-- Charts -->
+<div class="mt-6 flex flex-wrap gap-6">
+<div class="flex min-w-72 flex-1 flex-col gap-2 rounded-xl bg-white p-6 dark:bg-background-dark dark:border dark:border-gray-800">
+<p class="text-[#111418] dark:text-white text-base font-medium leading-normal">Sales Over Time</p>
+<p class="text-[#111418] dark:text-white tracking-light text-[32px] font-bold leading-tight truncate">$4,521</p>
+<div class="flex gap-1">
+<p class="text-gray-500 dark:text-gray-400 text-base font-normal leading-normal">Last 30 Days</p>
+<p class="text-success text-base font-medium leading-normal">+15.2%</p>
+</div>
+<div class="flex min-h-[180px] flex-1 flex-col gap-8 py-4">
+<svg fill="none" height="148" preserveaspectratio="none" viewbox="-3 0 478 150" width="100%" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25V149H326.769H0V109Z" fill="url(#paint0_linear_1131_5935)"></path>
+<path d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25" stroke="#2b8cee" stroke-linecap="round" stroke-width="3"></path>
+<defs>
+<lineargradient gradientunits="userSpaceOnUse" id="paint0_linear_1131_5935" x1="236" x2="236" y1="1" y2="149">
+<stop stop-color="#2b8cee" stop-opacity="0.2"></stop>
+<stop offset="1" stop-color="#2b8cee" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+</svg>
+<div class="flex justify-around">
+<p class="text-gray-500 dark:text-gray-400 text-[13px] font-bold leading-normal tracking-[0.015em]">Week 1</p>
+<p class="text-gray-500 dark:text-gray-400 text-[13px] font-bold leading-normal tracking-[0.015em]">Week 2</p>
+<p class="text-gray-500 dark:text-gray-400 text-[13px] font-bold leading-normal tracking-[0.015em]">Week 3</p>
+<p class="text-gray-500 dark:text-gray-400 text-[13px] font-bold leading-normal tracking-[0.015em]">Week 4</p>
+</div>
+</div>
+</div>
+<div class="flex min-w-72 flex-1 flex-col gap-2 rounded-xl bg-white p-6 dark:bg-background-dark dark:border dark:border-gray-800">
+<p class="text-[#111418] dark:text-white text-base font-medium leading-normal">Top Selling Items</p>
+<p class="text-[#111418] dark:text-white tracking-light text-[32px] font-bold leading-tight truncate">1,234 items</p>
+<div class="flex gap-1">
+<p class="text-gray-500 dark:text-gray-400 text-base font-normal leading-normal">Last 30 Days</p>
+<p class="text-success text-base font-medium leading-normal">+8.5%</p>
+</div>
+<div class="grid min-h-[180px] grid-flow-col gap-6 grid-rows-[1fr_auto] items-end justify-items-center px-3 pt-4">
+<div class="bg-primary/20 rounded-t w-full" style="height: 90%;"></div>
+<p class="text-gray-500 dark:text-gray-400 text-[13px] font-bold leading-normal tracking-[0.015em]">Burger</p>
+<div class="bg-primary/20 rounded-t w-full" style="height: 100%;"></div>
+<p class="text-gray-500 dark:text-gray-400 text-[13px] font-bold leading-normal tracking-[0.015em]">Fries</p>
+<div class="bg-primary/20 rounded-t w-full" style="height: 80%;"></div>
+<p class="text-gray-500 dark:text-gray-400 text-[13px] font-bold leading-normal tracking-[0.015em]">Pizza</p>
+<div class="bg-primary/20 rounded-t w-full" style="height: 30%;"></div>
+<p class="text-gray-500 dark:text-gray-400 text-[13px] font-bold leading-normal tracking-[0.015em]">Salad</p>
+<div class="bg-primary/20 rounded-t w-full" style="height: 30%;"></div>
+<p class="text-gray-500 dark:text-gray-400 text-[13px] font-bold leading-normal tracking-[0.015em]">Soda</p>
+</div>
+</div>
+</div>
+<!-- Recent Orders Table -->
+<div class="mt-6 flex flex-col">
+<h2 class="text-[#111418] dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em] pb-3 pt-5">Recent Orders</h2>
+<div class="overflow-x-auto rounded-xl bg-white dark:bg-background-dark dark:border dark:border-gray-800">
+<table class="min-w-full text-left text-sm">
+<thead class="border-b border-gray-200 dark:border-gray-800">
+<tr>
+<th class="px-6 py-4 font-medium text-gray-500" scope="col">Order ID</th>
+<th class="px-6 py-4 font-medium text-gray-500" scope="col">Customer</th>
+<th class="px-6 py-4 font-medium text-gray-500" scope="col">Total</th>
+<th class="px-6 py-4 font-medium text-gray-500" scope="col">Status</th>
+<th class="px-6 py-4 font-medium text-gray-500" scope="col">Date</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-200 dark:divide-gray-800">
+<tr>
+<td class="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">#12548</td>
+<td class="whitespace-nowrap px-6 py-4">Alex Johnson</td>
+<td class="whitespace-nowrap px-6 py-4">$22.50</td>
+<td class="whitespace-nowrap px-6 py-4">
+<span class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-300">Delivered</span>
+</td>
+<td class="whitespace-nowrap px-6 py-4 text-gray-500">2023-10-27</td>
+</tr>
+<tr>
+<td class="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">#12547</td>
+<td class="whitespace-nowrap px-6 py-4">Maria Garcia</td>
+<td class="whitespace-nowrap px-6 py-4">$15.00</td>
+<td class="whitespace-nowrap px-6 py-4">
+<span class="inline-flex items-center rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300">Pending</span></td>
+</tr>
+<tr>
+<td class="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">#12546</td>
+<td class="whitespace-nowrap px-6 py-4">James Smith</td>
+<td class="whitespace-nowrap px-6 py-4">$35.20</td>
+<td class="whitespace-nowrap px-6 py-4">
+<span class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-300">Delivered</span>
+</td>
+<td class="whitespace-nowrap px-6 py-4 text-gray-500">2023-10-27</td>
+</tr>
+<tr>
+<td class="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">#12545</td>
+<td class="whitespace-nowrap px-6 py-4">Patricia Brown</td>
+<td class="whitespace-nowrap px-6 py-4">$8.75</td>
+<td class="whitespace-nowrap px-6 py-4">
+<span class="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800 dark:bg-red-900 dark:text-red-300">Cancelled</span>
+</td>
+<td class="whitespace-nowrap px-6 py-4 text-gray-500">2023-10-26</td>
+</tr>
+<tr>
+<td class="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">#12544</td>
+<td class="whitespace-nowrap px-6 py-4">Michael Miller</td>
+<td class="whitespace-nowrap px-6 py-4">$19.99</td>
+<td class="whitespace-nowrap px-6 py-4">
+<span class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-300">Delivered</span>
+</td>
+<td class="whitespace-nowrap px-6 py-4 text-gray-500">2023-10-26</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

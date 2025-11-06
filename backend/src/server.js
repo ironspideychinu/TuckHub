@@ -16,6 +16,7 @@ import adminRoutes from './routes/admin.js';
 import { errorHandler, notFound } from './middlewares/errorHandler.js';
 import { registerOrderSocket } from './sockets/orders.js';
 import { microsoftAuth, microsoftCallback } from './controllers/authController.js';
+import { handleRazorpayWebhook } from './controllers/orderController.js';
 
 dotenv.config();
 
@@ -36,6 +37,7 @@ io.of('/orders'); // init namespace early
 registerOrderSocket(io);
 
 // Middleware
+app.post('/api/webhooks/razorpay', express.raw({type: 'application/json'}), handleRazorpayWebhook);
 app.use(cors({ origin: process.env.CLIENT_ORIGIN?.split(',') || '*', credentials: true }));
 app.use(express.json());
 app.use(cookieParser());

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CampusBites - Your Cart</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ee8c2b",
+                        "background-light": "#f8f7f6",
+                        "background-dark": "#221910",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#181411] dark:text-[#f8f7f6]">
+<div class="relative flex min-h-screen w-full flex-col">
+<!-- TopNavBar -->
+<header class="sticky top-0 z-10 w-full border-b border-zinc-200/50 dark:border-zinc-800/50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
+<div class="container mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+<div class="flex items-center gap-4">
+<div class="h-6 w-6">
+<svg class="text-primary" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_6_330)">
+<path clip-rule="evenodd" d="M24 0.757355L47.2426 24L24 47.2426L0.757355 24L24 0.757355ZM21 35.7574V12.2426L9.24264 24L21 35.7574Z" fill="currentColor" fill-rule="evenodd"></path>
+</g>
+<defs>
+<clippath id="clip0_6_330">
+<rect fill="white" height="48" width="48"></rect>
+</clippath>
+</defs>
+</svg>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em] text-[#181411] dark:text-[#f8f7f6]">CampusBites</h2>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden items-center gap-6 md:flex">
+<a class="text-sm font-medium leading-normal text-[#181411] dark:text-[#f8f7f6] hover:text-primary dark:hover:text-primary transition-colors" href="#">Menu</a>
+<a class="text-sm font-medium leading-normal text-[#181411] dark:text-[#f8f7f6] hover:text-primary dark:hover:text-primary transition-colors" href="#">Order History</a>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuADP1qR-6LYj-iFrteWCrFb6WvZ3sev4-q7sTXm2p22dLXYJFKsIqPmiUX2x6oska-RdyKSkj_cvE7noyMwlNMMeiUmF2SxsJSDqIAVfpZgKxnX6HRE_YLL9qQghVXYcLnXIKBlhLluztPpcPTvhGbtI4d5o__aGr_RhaT6HR-nsB2qCCQhEfzlzDHkNoNKd5y9xIcr1ngUjrRmUbQrs_6UvAFoefm_JvUV9Yil86kdrOtpvrCRHZD9yRjOy2ETfhZf2inzSFaT9EY");'></div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1">
+<div class="container mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+<!-- PageHeading -->
+<div class="flex flex-wrap items-baseline justify-between gap-3 pb-8">
+<p class="text-[#181411] dark:text-[#f8f7f6] text-4xl font-black leading-tight tracking-[-0.033em] min-w-72">Your Cart</p>
+<a class="text-primary text-sm font-medium hover:underline" href="#">Continue Shopping</a>
+</div>
+<div class="grid grid-cols-1 gap-12 lg:grid-cols-3">
+<!-- Cart Items Column -->
+<div class="lg:col-span-2">
+<div class="space-y-4">
+<!-- ListItem 1 -->
+<div class="flex items-center gap-4 bg-white dark:bg-zinc-900/50 p-4 rounded-xl border border-zinc-200/80 dark:border-zinc-800/80">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-16 shrink-0" data-alt="Classic Beef Burger" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuArkdfBWyGqRAu1_UVuKY1rRoQgirURdAlOEwR2U3y6Bnm0DzTJHPh-hBWolnTaCezYsPakHMpEoCFC3oqOV9QA5fCisdYIkrkFC5A7r05_TtsqDm8h07NPSRECzoeHDXlnmIZF0QXEbK5Qt1a5rlu76crS9zDjrTjXHA8Y3uOJLpJN6-ocIAsdT_vlyo1ewo-aEqn7becgTvrYdbKys4xNrFcABQkxBMlOzdw7TJvE6ZjgRPEvgDqHQcKNPxzjoKl5zRc67AQetgc");'></div>
+<div class="flex-1">
+<p class="text-[#181411] dark:text-[#f8f7f6] text-base font-medium leading-normal line-clamp-1">Classic Beef Burger</p>
+<p class="text-[#897561] dark:text-zinc-400 text-sm font-normal leading-normal line-clamp-2">No onions, extra pickles</p>
+</div>
+<div class="flex items-center gap-2 text-[#181411] dark:text-[#f8f7f6]">
+<button class="text-base font-medium leading-normal flex h-8 w-8 items-center justify-center rounded-full bg-[#f4f2f0] dark:bg-zinc-800 cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors">-</button>
+<input class="text-base font-medium leading-normal w-6 p-0 text-center bg-transparent focus:outline-0 focus:ring-0 focus:border-none border-none [appearance:textfield] [&amp;::-webkit-inner-spin-button]:appearance-none [&amp;::-webkit-outer-spin-button]:appearance-none" type="number" value="2"/>
+<button class="text-base font-medium leading-normal flex h-8 w-8 items-center justify-center rounded-full bg-[#f4f2f0] dark:bg-zinc-800 cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors">+</button>
+</div>
+<p class="w-20 text-right font-semibold text-base text-[#181411] dark:text-[#f8f7f6]">$17.98</p>
+<button class="text-zinc-500 dark:text-zinc-400 hover:text-red-500 dark:hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined text-xl" data-icon="delete">delete</span>
+</button>
+</div>
+<!-- ListItem 2 -->
+<div class="flex items-center gap-4 bg-white dark:bg-zinc-900/50 p-4 rounded-xl border border-zinc-200/80 dark:border-zinc-800/80">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-16 shrink-0" data-alt="Spicy Chicken Wrap" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB9b8JupTA9HvwHOliIkFcImrYMRWTaUJQR0jP1NVKuT3hs51njEjXg39fNK34a0Jh-Ha5k3yW1uhhMV216EdnbM2cT8XJodNP0iJOW1zoj8T-DimMOqb0MPWFNQz1m9PCbeAHXQDCth5SbxpeG5ua6JSZlUiWVZWNVIwrlTY4kXGd6HjAHbIaL0y24H-7XAab2_xWVyJkuKk9lcXHVAXGHSMw6Ab5HQdhpxrQCIXZCvlGwNuE7ufW0yG4oxAQZZIAHMNRShoAwCrs");'></div>
+<div class="flex-1">
+<p class="text-[#181411] dark:text-[#f8f7f6] text-base font-medium leading-normal line-clamp-1">Spicy Chicken Wrap</p>
+<p class="text-[#897561] dark:text-zinc-400 text-sm font-normal leading-normal line-clamp-2">With spicy mayo</p>
+</div>
+<div class="flex items-center gap-2 text-[#181411] dark:text-[#f8f7f6]">
+<button class="text-base font-medium leading-normal flex h-8 w-8 items-center justify-center rounded-full bg-[#f4f2f0] dark:bg-zinc-800 cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors">-</button>
+<input class="text-base font-medium leading-normal w-6 p-0 text-center bg-transparent focus:outline-0 focus:ring-0 focus:border-none border-none [appearance:textfield] [&amp;::-webkit-inner-spin-button]:appearance-none [&amp;::-webkit-outer-spin-button]:appearance-none" type="number" value="1"/>
+<button class="text-base font-medium leading-normal flex h-8 w-8 items-center justify-center rounded-full bg-[#f4f2f0] dark:bg-zinc-800 cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors">+</button>
+</div>
+<p class="w-20 text-right font-semibold text-base text-[#181411] dark:text-[#f8f7f6]">$7.50</p>
+<button class="text-zinc-500 dark:text-zinc-400 hover:text-red-500 dark:hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined text-xl" data-icon="delete">delete</span>
+</button>
+</div>
+<!-- ListItem 3 -->
+<div class="flex items-center gap-4 bg-white dark:bg-zinc-900/50 p-4 rounded-xl border border-zinc-200/80 dark:border-zinc-800/80">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-16 shrink-0" data-alt="Crispy Fries" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAeujOpfA0QWdwcx_4ORZwyh80medVOMRglhl4jm090mz-Xovr0kvCKmX0gSZXtYfm5yn2Be4ucAERrEAuHMjZw-twlMMC1iv9q8rDgG90GkWW443idMmXmPVAYyRGXCcmJCkGYjBRIn1GkA_jRgag0REP18wUzCEC7NIlZofvqErheSUjZwi3lLdDyvNKCiWCRtTaCcgSMBX_xN8aYx9tQBxDbd64L1foAzhA4VeCBnQKob0YsVnyGxta2ok9bTK3VRus5AJzVnDQ");'></div>
+<div class="flex-1">
+<p class="text-[#181411] dark:text-[#f8f7f6] text-base font-medium leading-normal line-clamp-1">Fries</p>
+<p class="text-[#897561] dark:text-zinc-400 text-sm font-normal leading-normal line-clamp-2">Side order</p>
+</div>
+<div class="flex items-center gap-2 text-[#181411] dark:text-[#f8f7f6]">
+<button class="text-base font-medium leading-normal flex h-8 w-8 items-center justify-center rounded-full bg-[#f4f2f0] dark:bg-zinc-800 cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors">-</button>
+<input class="text-base font-medium leading-normal w-6 p-0 text-center bg-transparent focus:outline-0 focus:ring-0 focus:border-none border-none [appearance:textfield] [&amp;::-webkit-inner-spin-button]:appearance-none [&amp;::-webkit-outer-spin-button]:appearance-none" type="number" value="1"/>
+<button class="text-base font-medium leading-normal flex h-8 w-8 items-center justify-center rounded-full bg-[#f4f2f0] dark:bg-zinc-800 cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors">+</button>
+</div>
+<p class="w-20 text-right font-semibold text-base text-[#181411] dark:text-[#f8f7f6]">$3.00</p>
+<button class="text-zinc-500 dark:text-zinc-400 hover:text-red-500 dark:hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined text-xl" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Order Summary Column -->
+<div class="lg:col-span-1">
+<div class="sticky top-24">
+<div class="bg-white dark:bg-zinc-900/50 p-6 rounded-xl border border-zinc-200/80 dark:border-zinc-800/80">
+<h3 class="text-lg font-bold text-[#181411] dark:text-[#f8f7f6] mb-4">Order Summary</h3>
+<div class="space-y-3 text-sm">
+<div class="flex justify-between text-[#897561] dark:text-zinc-400">
+<span>Subtotal</span>
+<span>$28.48</span>
+</div>
+<div class="flex justify-between text-[#897561] dark:text-zinc-400">
+<span>Service Fee</span>
+<span>$1.50</span>
+</div>
+</div>
+<div class="my-4 border-t border-dashed border-zinc-200 dark:border-zinc-700"></div>
+<div class="flex justify-between items-center text-lg font-bold text-[#181411] dark:text-[#f8f7f6]">
+<span>Total</span>
+<span>$29.98</span>
+</div>
+<button class="mt-6 flex w-full min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-4 bg-primary text-[#181411] text-base font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors">
+<span class="truncate">Proceed to Checkout</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

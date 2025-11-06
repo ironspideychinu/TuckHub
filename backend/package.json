@@ -7,10 +7,13 @@
   "scripts": {
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
+    "seed": "node scripts/seedData.js",
     "lint": "echo 'No linter configured'"
   },
   "dependencies": {
+    "@azure/msal-node": "^2.6.4",
     "bcryptjs": "^2.4.3",
+    "cloudinary": "^2.8.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
@@ -19,9 +22,10 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.8.1",
     "morgan": "^1.10.0",
-    "socket.io": "^4.7.5",
-    "@azure/msal-node": "^2.6.4",
-    "node-fetch": "^3.3.2"
+    "multer": "^2.0.2",
+    "node-fetch": "^3.3.2",
+    "razorpay": "^2.9.6",
+    "socket.io": "^4.7.5"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"

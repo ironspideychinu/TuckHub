@@ -71,19 +71,33 @@ export async function me(req, res, next) {
 }
 
 // ================= Microsoft OAuth (Entra ID) =================
-const msalConfig = {
-  auth: {
-    clientId: process.env.CLIENT_ID,
-    authority: `https://login.microsoftonline.com/${process.env.TENANT_ID}`,
-    clientSecret: process.env.CLIENT_SECRET,
-  },
-};
 let cca;
+
+function isMicrosoftOAuthConfigured() {
+  return !!(
+    process.env.CLIENT_ID && 
+    process.env.CLIENT_SECRET && 
+    process.env.TENANT_ID && 
+    process.env.REDIRECT_URI &&
+    process.env.CLIENT_ID.trim() !== '' &&
+    process.env.CLIENT_SECRET.trim() !== '' &&
+    process.env.TENANT_ID.trim() !== ''
+  );
+}
+
 function getMsalApp() {
+  if (!isMicrosoftOAuthConfigured()) {
+    throw new Error('Microsoft OAuth is not configured');
+  }
+  
   if (!cca) {
-    if (!process.env.CLIENT_ID || !process.env.CLIENT_SECRET || !process.env.TENANT_ID || !process.env.REDIRECT_URI) {
-      throw new Error('Missing Azure OAuth configuration');
-    }
+    const msalConfig = {
+      auth: {
+        clientId: process.env.CLIENT_ID.trim(),
+        authority: `https://login.microsoftonline.com/${process.env.TENANT_ID.trim()}`,
+        clientSecret: process.env.CLIENT_SECRET.trim(),
+      },
+    };
     cca = new msal.ConfidentialClientApplication(msalConfig);
   }
   return cca;
@@ -93,6 +107,11 @@ const MS_SCOPES = [ 'User.Read' ];
 
 export async function microsoftAuth(req, res, next) {
   try {
+    // Check if Microsoft OAuth is configured
+    if (!isMicrosoftOAuthConfigured()) {
+      res.status(503);
+      throw new Error('Microsoft OAuth is not configured. Please add CLIENT_ID, CLIENT_SECRET, and TENANT_ID to .env file.');
+    }
     const app = getMsalApp();
     const authCodeUrlParameters = {
       scopes: MS_SCOPES,
@@ -120,6 +139,12 @@ export async function microsoftCallback(req, res, next) {
       res.status(400);
       throw new Error('Missing code');
     }
+    
+    if (!isMicrosoftOAuthConfigured()) {
+      res.status(503);
+      throw new Error('Microsoft OAuth is not configured');
+    }
+    
     const app = getMsalApp();
     const tokenResponse = await app.acquireTokenByCode({ code, scopes: MS_SCOPES, redirectUri: process.env.REDIRECT_URI });
     const accessToken = tokenResponse?.accessToken;

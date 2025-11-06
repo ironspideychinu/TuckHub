@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Order Management - Campus Food Ordering</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                        "success": "#50E3C2",
+                        "danger": "#D0021B",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24
+        }
+    </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-[#333333] dark:text-gray-200">
+<div class="relative flex min-h-screen w-full">
+<aside class="sticky top-0 h-screen w-64 flex-shrink-0 bg-white dark:bg-background-dark dark:border-r dark:border-gray-800">
+<div class="flex h-full flex-col justify-between p-4">
+<div class="flex flex-col gap-8">
+<div class="flex items-center gap-2 px-3">
+<span class="material-symbols-outlined text-primary text-3xl">fastfood</span>
+<h1 class="text-[#111418] dark:text-white text-lg font-bold">CampusEats</h1>
+</div>
+<div class="flex flex-col gap-4">
+<div class="flex flex-col gap-2">
+<a class="flex items-center gap-3 rounded-lg bg-primary/10 px-3 py-2 text-primary dark:bg-primary/20" href="#">
+<span class="material-symbols-outlined">view_kanban</span>
+<p class="text-sm font-medium">Order Board</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800 rounded-lg" href="#">
+<span class="material-symbols-outlined">history</span>
+<p class="text-sm font-medium">Order History</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800 rounded-lg" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<p class="text-sm font-medium">Menu</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800 rounded-lg" href="#">
+<span class="material-symbols-outlined">settings</span>
+<p class="text-sm font-medium">Settings</p>
+</a>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800 rounded-lg cursor-pointer">
+<span class="material-symbols-outlined">logout</span>
+<p class="text-sm font-medium">Log Out</p>
+</div>
+</div>
+</div>
+</aside>
+<main class="flex-1 flex flex-col h-screen overflow-hidden">
+<header class="flex-shrink-0 flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-800">
+<p class="text-[#111418] dark:text-white text-2xl font-bold">Tuckshop Order Board</p>
+<div class="flex items-center gap-4">
+<button class="relative rounded-full p-2 text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-danger"></span>
+</button>
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Staff user avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDo4-llCiupEk-fgvfiNlGv2JkCff8_Q16Qc8fMl3oPqIm2st9ycJtR2s9YTavNJ8PQbfTL06WQRiu7CmUeI6gZSstg_o0nFclVoB9QKKfu00wfEZqYTI_sCxAgtnf8LWnlgHoI4JRJANEsMGoVIo10ithyXoWGgI8oIlGjKP6JentscSMxammy8SjZHzC73gX4vAJkKc6GfCmSwH1hYJ8N1kHB7ycZrxhJ26JLna3sAK7zkydwuYERBR-AZ4SbQZ9_1jCRaQaDaX8");'></div>
+<div class="flex flex-col">
+<h1 class="text-[#111418] dark:text-white text-base font-medium leading-normal">Staff Name</h1>
+<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal">Tuckshop Staff</p>
+</div>
+</div>
+</div>
+</header>
+<div class="flex-1 grid grid-cols-4 gap-6 p-6 overflow-x-auto">
+<div class="flex flex-col bg-gray-100 dark:bg-background-dark dark:border dark:border-gray-800 rounded-lg">
+<div class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+<h2 class="font-bold text-[#111418] dark:text-white">Placed</h2>
+<span class="px-2 py-1 text-sm font-semibold text-gray-700 bg-gray-200 dark:bg-gray-700 dark:text-gray-200 rounded-full">3</span>
+</div>
+<div class="flex-1 p-4 space-y-4 overflow-y-auto">
+<div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow cursor-grab">
+<div class="flex justify-between items-start mb-2">
+<p class="font-bold text-gray-800 dark:text-white">#12548</p>
+<span class="text-xs text-gray-500 dark:text-gray-400">2 min ago</span>
+</div>
+<div class="space-y-1 text-sm text-gray-700 dark:text-gray-300">
+<p>1x Classic Burger</p>
+<p>1x Fries</p>
+<p>1x Coke</p>
+</div>
+</div>
+<div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow cursor-grab">
+<div class="flex justify-between items-start mb-2">
+<p class="font-bold text-gray-800 dark:text-white">#12547</p>
+<span class="text-xs text-gray-500 dark:text-gray-400">5 min ago</span>
+</div>
+<div class="space-y-1 text-sm text-gray-700 dark:text-gray-300">
+<p>2x Veggie Pizza</p>
+</div>
+</div>
+<div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow cursor-grab">
+<div class="flex justify-between items-start mb-2">
+<p class="font-bold text-gray-800 dark:text-white">#12546</p>
+<span class="text-xs text-gray-500 dark:text-gray-400">8 min ago</span>
+</div>
+<div class="space-y-1 text-sm text-gray-700 dark:text-gray-300">
+<p>1x Chicken Salad</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex flex-col bg-gray-100 dark:bg-background-dark dark:border dark:border-gray-800 rounded-lg">
+<div class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+<h2 class="font-bold text-yellow-600 dark:text-yellow-400">Making</h2>
+<span class="px-2 py-1 text-sm font-semibold text-yellow-800 bg-yellow-100 dark:bg-yellow-900 dark:text-yellow-300 rounded-full">2</span>
+</div>
+<div class="flex-1 p-4 space-y-4 overflow-y-auto">
+<div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow cursor-grab">
+<div class="flex justify-between items-start mb-2">
+<p class="font-bold text-gray-800 dark:text-white">#12545</p>
+<span class="text-xs text-gray-500 dark:text-gray-400">10 min ago</span>
+</div>
+<div class="space-y-1 text-sm text-gray-700 dark:text-gray-300">
+<p>1x Beef Burger</p>
+<p>2x Fries</p>
+</div>
+</div>
+<div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow cursor-grab">
+<div class="flex justify-between items-start mb-2">
+<p class="font-bold text-gray-800 dark:text-white">#12544</p>
+<span class="text-xs text-gray-500 dark:text-gray-400">12 min ago</span>
+</div>
+<div class="space-y-1 text-sm text-gray-700 dark:text-gray-300">
+<p>1x Pepperoni Pizza</p>
+<p>1x Garlic Bread</p>
+<p>1x Sprite</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex flex-col bg-gray-100 dark:bg-background-dark dark:border dark:border-gray-800 rounded-lg">
+<div class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+<h2 class="font-bold text-green-600 dark:text-green-400">Ready</h2>
+<span class="px-2 py-1 text-sm font-semibold text-green-800 bg-green-100 dark:bg-green-900 dark:text-green-300 rounded-full">1</span>
+</div>
+<div class="flex-1 p-4 space-y-4 overflow-y-auto">
+<div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow cursor-grab">
+<div class="flex justify-between items-start mb-2">
+<p class="font-bold text-gray-800 dark:text-white">#12542</p>
+<span class="text-xs text-gray-500 dark:text-gray-400">18 min ago</span>
+</div>
+<div class="space-y-1 text-sm text-gray-700 dark:text-gray-300">
+<p>1x Milkshake</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex flex-col bg-gray-100 dark:bg-background-dark dark:border dark:border-gray-800 rounded-lg">
+<div class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+<h2 class="font-bold text-blue-600 dark:text-blue-400">Completed</h2>
+<span class="px-2 py-1 text-sm font-semibold text-blue-800 bg-blue-100 dark:bg-blue-900 dark:text-blue-300 rounded-full">4</span>
+</div>
+<div class="flex-1 p-4 space-y-4 overflow-y-auto">
+<div class="bg-white dark:bg-gray-800/50 p-4 rounded-lg shadow-sm opacity-70 cursor-grab">
+<div class="flex justify-between items-start mb-2">
+<p class="font-bold text-gray-600 dark:text-gray-300">#12541</p>
+<span class="text-xs text-gray-500 dark:text-gray-400">25 min ago</span>
+</div>
+<div class="space-y-1 text-sm text-gray-500 dark:text-gray-400">
+<p>1x Chicken Sandwich</p>
+</div>
+</div>
+<div class="bg-white dark:bg-gray-800/50 p-4 rounded-lg shadow-sm opacity-70 cursor-grab">
+<div class="flex justify-between items-start mb-2">
+<p class="font-bold text-gray-600 dark:text-gray-300">#12540</p>
+<span class="text-xs text-gray-500 dark:text-gray-400">30 min ago</span>
+</div>
+<div class="space-y-1 text-sm text-gray-500 dark:text-gray-400">
+<p>2x Coffee</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

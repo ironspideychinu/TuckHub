@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Campus Grub - Tuckshop Menu</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#ee8c2b",
+              "background-light": "#f8f7f6",
+              "background-dark": "#181411",
+              "surface-light": "#ffffff",
+              "surface-dark": "#221910",
+              "text-light": "#181411",
+              "text-dark": "#f8f7f6",
+              "text-muted-light": "#897561",
+              "text-muted-dark": "#a19181",
+              "border-light": "#f4f2f0",
+              "border-dark": "#3a2e21"
+            },
+            fontFamily: {
+              "display": ["Plus Jakarta Sans", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.5rem", "lg": "0.75rem", "xl": "1rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
+<div class="relative flex min-h-screen w-full flex-col">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-20 flex items-center justify-between whitespace-nowrap border-b border-border-light dark:border-border-dark px-4 sm:px-6 lg:px-8 py-3 bg-surface-light dark:bg-surface-dark/80 backdrop-blur-sm">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary text-3xl">
+                    local_mall
+                </span>
+<h2 class="text-text-light dark:text-text-dark text-xl font-bold tracking-[-0.015em]">Campus Grub</h2>
+</div>
+<div class="flex flex-1 justify-end items-center gap-4 sm:gap-6">
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Log In</span>
+</button>
+<button class="relative flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-border-light dark:bg-border-dark text-text-light dark:text-text-dark gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+<span class="material-symbols-outlined">
+                        shopping_cart
+                    </span>
+<span class="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs font-bold text-white">3</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAqAbROrfiHrNd_w8KjdeZ_E-sBfmkQRC4VwStvTYJJtXxJ2gwNHgurGJ6_bB_kqA0ej1cFZVGmR_YP4-Xgtr79zlHSwFmkGnIZo_gb3lDIecH9cPnQNa3g2Rm9kLtNuxSG6jLh_zk1usSojSeSCOlK_j3dNr3eZ4UK6V0yvUV3OX1hV8WNfnK7ohIEuMhUrlUi8pti01IcS4o6vP7nejl5DGTJY6u1tRv1XEkH4gdpcdwtYQjFXlp0hLtObtxjwkDnwmzW0KsSNwM");'></div>
+</div>
+</header>
+<!-- Main Content -->
+<div class="flex flex-1">
+<!-- Left Sidebar -->
+<aside class="sticky top-[65px] h-[calc(100vh-65px)] w-64 flex-shrink-0 border-r border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark hidden lg:flex flex-col">
+<div class="flex flex-col gap-4 p-4">
+<div class="flex gap-3 items-center">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-12" data-alt="Tuckshop logo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBCcqGOVZhvmVYhP3BenKSeDPgEVt9PA-S33Sbh7T8DC87YdsS177TDYSWW3lWT0-PP0_UrHkuqYEhFk79U78y0lUuPW9-5bTEC53XtcF9pw74A9BNR0iXfxEcOPYBJvSKgYnVHXd5KbLJTYFY82q2F-9iMVjCykSqBloczR0X6zqMnjt36fFm8inNUvVU0XW_zmdhlw5L_8eQ0mp33TqdWIWAIuwZkW6O8QBXM2_FoXcNdzyPqD7ciWu2rjXeAVLRXoj2NK9Uq6WM");'></div>
+<div class="flex flex-col">
+<h1 class="text-text-light dark:text-text-dark text-base font-bold">The Tuckshop</h1>
+<p class="text-text-muted-light dark:text-text-muted-dark text-sm font-normal">Campus Eats</p>
+</div>
+</div>
+<div class="px-0 py-3">
+<label class="flex flex-col min-w-40 h-11 w-full">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+<div class="text-text-muted-light dark:text-text-muted-dark flex bg-border-light dark:bg-border-dark items-center justify-center pl-3 rounded-l-lg">
+<span class="material-symbols-outlined text-xl">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-0 border-none bg-border-light dark:bg-border-dark h-full placeholder:text-text-muted-light dark:placeholder:text-text-muted-dark px-2 text-sm font-normal" placeholder="Search for food..." value=""/>
+</div>
+</label>
+</div>
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/20 text-primary" href="#">
+<span class="material-symbols-outlined">view_list</span>
+<p class="text-sm font-bold">All Items</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-border-light dark:hover:bg-border-dark" href="#">
+<span class="material-symbols-outlined text-text-muted-light dark:text-text-muted-dark">lunch_dining</span>
+<p class="text-sm font-medium">Burgers</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-border-light dark:hover:bg-border-dark" href="#">
+<span class="material-symbols-outlined text-text-muted-light dark:text-text-muted-dark">cookie</span>
+<p class="text-sm font-medium">Snacks</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-border-light dark:hover:bg-border-dark" href="#">
+<span class="material-symbols-outlined text-text-muted-light dark:text-text-muted-dark">coffee</span>
+<p class="text-sm font-medium">Drinks</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-border-light dark:hover:bg-border-dark" href="#">
+<span class="material-symbols-outlined text-text-muted-light dark:text-text-muted-dark">breakfast_dining</span>
+<p class="text-sm font-medium">Breakfast</p>
+</a>
+</div>
+</div>
+</aside>
+<!-- Menu Content -->
+<main class="flex-1 p-4 sm:p-6 lg:p-8">
+<div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+<h1 class="text-text-light dark:text-text-dark text-4xl font-black tracking-[-0.033em]">Tuckshop Menu</h1>
+<div class="flex gap-2 sm:gap-3 overflow-x-auto pb-2">
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark px-3">
+<span class="material-symbols-outlined text-base">swap_vert</span>
+<p class="text-text-light dark:text-text-dark text-sm font-medium">Sort by</p>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-1 rounded-lg bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark pl-3 pr-2">
+<p class="text-text-light dark:text-text-dark text-sm font-medium">Price</p>
+<span class="material-symbols-outlined text-base">arrow_drop_down</span>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-1 rounded-lg bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark pl-3 pr-2">
+<p class="text-text-light dark:text-text-dark text-sm font-medium">Rating</p>
+<span class="material-symbols-outlined text-base">arrow_drop_down</span>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-1 rounded-lg bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark pl-3 pr-2">
+<p class="text-text-light dark:text-text-dark text-sm font-medium">Popular</p>
+<span class="material-symbols-outlined text-base">arrow_drop_down</span>
+</button>
+</div>
+</div>
+<!-- Food Item Grid -->
+<div class="grid grid-cols-1 @md:grid-cols-2 @4xl:grid-cols-3 gap-6">
+<!-- Food Item Card 1 -->
+<div class="flex flex-col bg-surface-light dark:bg-surface-dark rounded-xl overflow-hidden border border-border-light dark:border-border-dark shadow-sm hover:shadow-lg transition-shadow duration-300">
+<div class="relative">
+<div class="w-full h-48 bg-cover bg-center" data-alt="Classic Beef Burger" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAH4tl3Vl777vczcPIiu36qMP8iY9F80b6W5-8QAjw5j-x0Sx75MhsG133OqBCf8Egar-W4c5kdpq8ghkPYA_w4grOwXSkp4rBT64b_xBIl-O0bmUJyqXoz16n-rRg2mllVBe5k1CFKD9PxrcpY4y6ZciRbJYa0TN9s7MsEh_LgPQuRSvqQRMbWadGY5zoa2nTI3C-SpC327pyb1ZhEyEsB4baQdyNzZOFVEHKgMbTuPFvGmsUqr4O3EfBJiJ7JzocZgwuPS7d_2Jc')"></div>
+<div class="absolute top-3 right-3 bg-green-100 text-green-800 text-xs font-bold px-2.5 py-1 rounded-full">In Stock</div>
+</div>
+<div class="p-4 flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-2">
+<h3 class="text-lg font-bold text-text-light dark:text-text-dark">Classic Beef Burger</h3>
+<p class="text-lg font-bold text-primary">$5.50</p>
+</div>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark mb-4 flex-grow">100g beef patty, lettuce, tomato, and special sauce on a sesame seed bun.</p>
+<button class="w-full flex items-center justify-center gap-2 h-11 rounded-lg bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-colors">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+                                Add to Cart
+                            </button>
+</div>
+</div>
+<!-- Food Item Card 2 -->
+<div class="flex flex-col bg-surface-light dark:bg-surface-dark rounded-xl overflow-hidden border border-border-light dark:border-border-dark shadow-sm hover:shadow-lg transition-shadow duration-300">
+<div class="relative">
+<div class="w-full h-48 bg-cover bg-center" data-alt="Spicy Chicken Sandwich" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBPb3ZxcAzKl79AHMxTjtcQmRlSs9ZMPpqcL91eaE7P8Bl9qQ2vg9ubeGRnDN4gWd7w836RKPaHrjjTzqe0uNEFN0kx-Wf7VezLXfcYQOzedCYy1tRXzQz6NvVF1KaBbYVsx9e7_x0Y8ygaNcgPkrfV4TJlQ9ENqMucomMsIsOp7xjF_QL3N1OnJhdTXA83kPiO6KpQ7bQprU66hj1CAP0xNT5mkumm_rYs0DSW4SU5SmUAhtdqFeUPvmQDJ5ddBQPGXxXY7vmGx84')"></div>
+<div class="absolute top-3 right-3 bg-red-100 text-red-800 text-xs font-bold px-2.5 py-1 rounded-full">Out of Stock</div>
+</div>
+<div class="p-4 flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-2">
+<h3 class="text-lg font-bold text-text-light dark:text-text-dark">Spicy Chicken Sandwich</h3>
+<p class="text-lg font-bold text-primary">$6.20</p>
+</div>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark mb-4 flex-grow">Crispy fried chicken breast with spicy mayo and pickles on a brioche bun.</p>
+<button class="w-full flex items-center justify-center gap-2 h-11 rounded-lg bg-gray-300 dark:bg-gray-600 text-gray-500 dark:text-gray-400 text-sm font-bold cursor-not-allowed" disabled="">
+<span class="material-symbols-outlined">notifications</span>
+                                Notify Me
+                            </button>
+</div>
+</div>
+<!-- Food Item Card 3 -->
+<div class="flex flex-col bg-surface-light dark:bg-surface-dark rounded-xl overflow-hidden border border-border-light dark:border-border-dark shadow-sm hover:shadow-lg transition-shadow duration-300">
+<div class="relative">
+<div class="w-full h-48 bg-cover bg-center" data-alt="Chocolate Milkshake" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB8ZgVoiW8KHbNKfzFzb_DY0AUE1WHiYAVbmgkUQhlkr83oB6fhk-wvHVjrEcuPlT7crUrFCKJAV5N2RgfouzEa4QTGcIELuEz63PGea5Z9EncfMxCfz2_PaSiGw7q7GOLVZY5ouBkH6ae53xME2mZCMmLgww-_EI2eqf1OkG734Suoc1u6UurwAaPbTqPd3d8m7rX8RBU3HxW-KfI-wVvhWR8yJoauFCLDMLedXwhCouch0T8LtliZc_RHmfPGRI889CyhYDHt4q4')"></div>
+<div class="absolute top-3 right-3 bg-green-100 text-green-800 text-xs font-bold px-2.5 py-1 rounded-full">In Stock</div>
+</div>
+<div class="p-4 flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-2">
+<h3 class="text-lg font-bold text-text-light dark:text-text-dark">Chocolate Milkshake</h3>
+<p class="text-lg font-bold text-primary">$4.00</p>
+</div>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark mb-4 flex-grow">Rich and creamy chocolate milkshake topped with whipped cream.</p>
+<button class="w-full flex items-center justify-center gap-2 h-11 rounded-lg bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-colors">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+                                Add to Cart
+                            </button>
+</div>
+</div>
+<!-- Food Item Card 4 -->
+<div class="flex flex-col bg-surface-light dark:bg-surface-dark rounded-xl overflow-hidden border border-border-light dark:border-border-dark shadow-sm hover:shadow-lg transition-shadow duration-300">
+<div class="relative">
+<div class="w-full h-48 bg-cover bg-center" data-alt="Seasoned Fries" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDU4OcFgnTAs6L3_9SNFF2-YZggOBCJ1uOlWNVptTMFAlbjakMwLg8YdXs0cyM5A_4am0PEj9jDa7SYIs08eGQaftUHT8HifssPDHIEBHvmsyX5aHZC8vKW7YtQPVEzyvD3bKsFAuJznNbhG8l32IIvU0dHAX9ZqzEPYRefC9epd-Qj0TXVukxDFQ5J1WNL358ZixtTqJhgmaQsBhIXDjVvVhHY-Few2cEPY8uOlnCXy9AGRINtR4BarGH9wANeTr_BvD9FyEKP9Eg')"></div>
+<div class="absolute top-3 right-3 bg-green-100 text-green-800 text-xs font-bold px-2.5 py-1 rounded-full">In Stock</div>
+</div>
+<div class="p-4 flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-2">
+<h3 class="text-lg font-bold text-text-light dark:text-text-dark">Seasoned Fries</h3>
+<p class="text-lg font-bold text-primary">$2.50</p>
+</div>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark mb-4 flex-grow">Crispy golden fries tossed in our signature seasoning blend.</p>
+<button class="w-full flex items-center justify-center gap-2 h-11 rounded-lg bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-colors">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+                                Add to Cart
+                            </button>
+</div>
+</div>
+<!-- Food Item Card 5 -->
+<div class="flex flex-col bg-surface-light dark:bg-surface-dark rounded-xl overflow-hidden border border-border-light dark:border-border-dark shadow-sm hover:shadow-lg transition-shadow duration-300">
+<div class="relative">
+<div class="w-full h-48 bg-cover bg-center" data-alt="Veggie Wrap" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAit7arlQVuzo-FzGMOrprER0aJReTzQfbZOXWdN2owhB5qv6JsCP0jONPtxAHAXZtnKgfvmruaF7uXbYRNhuul0CZz-MCiVu41XaoJYtnHQO5cXqVVt2Zx47HDXhCzCa8V4pAyXZ_QJMjTBc73HQEG3YjCkG6xBF1zPW-GhCnprL067RSe6nRV1qKXOo2OwiPUeAWXt2v5ViapOeovGfwycoI0hZwuwag1nH3Lbhb0vnzIypipT6bcLSiA_X9yurzjUHpv0uugPCk')"></div>
+<div class="absolute top-3 right-3 bg-green-100 text-green-800 text-xs font-bold px-2.5 py-1 rounded-full">In Stock</div>
+</div>
+<div class="p-4 flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-2">
+<h3 class="text-lg font-bold text-text-light dark:text-text-dark">Veggie Wrap</h3>
+<p class="text-lg font-bold text-primary">$5.00</p>
+</div>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark mb-4 flex-grow">Fresh vegetables, hummus, and feta cheese in a whole wheat tortilla.</p>
+<button class="w-full flex items-center justify-center gap-2 h-11 rounded-lg bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-colors">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+                                Add to Cart
+                            </button>
+</div>
+</div>
+<!-- Food Item Card 6 -->
+<div class="flex flex-col bg-surface-light dark:bg-surface-dark rounded-xl overflow-hidden border border-border-light dark:border-border-dark shadow-sm hover:shadow-lg transition-shadow duration-300">
+<div class="relative">
+<div class="w-full h-48 bg-cover bg-center" data-alt="Iced Coffee" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA5TMN3UfdwB0_2ffM9L3z08FyyKYC3Ib2EOiKSA_GzIINcZgSJQbIcdeu9MDk2sitA0h90iMay7paghmZ7Rm2_qMYLGMZ8iOCZWWrJojWFAhWm35bfnx9fX0ijSur2XBsfsbdz321p_m1S8AkgIEphvGgLk6eHVRbJT7GvY-ZHWLQdHHb00raz28nPWNGelabG6RhSIrkOoi9evKMpyuMr1p_46_eGqWUdcZ86ZYDHj3hwOKUJnPLe1siNk07lYLTcmK297hXEMQ4')"></div>
+<div class="absolute top-3 right-3 bg-green-100 text-green-800 text-xs font-bold px-2.5 py-1 rounded-full">In Stock</div>
+</div>
+<div class="p-4 flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-2">
+<h3 class="text-lg font-bold text-text-light dark:text-text-dark">Iced Coffee</h3>
+<p class="text-lg font-bold text-primary">$3.00</p>
+</div>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark mb-4 flex-grow">Chilled brewed coffee served over ice. Sweeten it your way.</p>
+<button class="w-full flex items-center justify-center gap-2 h-11 rounded-lg bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-colors">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+                                Add to Cart
+                            </button>
+</div>
+</div>
+</div>
+</main>
+<!-- Right Sidebar - Cart Summary -->
+<aside class="sticky top-[65px] h-[calc(100vh-65px)] w-80 flex-shrink-0 border-l border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark hidden xl:flex flex-col">
+<div class="p-6 border-b border-border-light dark:border-border-dark">
+<h2 class="text-xl font-bold">My Order</h2>
+</div>
+<div class="flex-grow p-6 overflow-y-auto space-y-4">
+<!-- Cart Item 1 -->
+<div class="flex items-center gap-4">
+<img class="w-16 h-16 rounded-lg object-cover" data-alt="Classic Beef Burger in cart" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGm_6SGGwZkOWjkGqYKKxFZrFtBfxyjWGgWFXboAqJxSJVhwT1-3xYOPcCeNku50CESikqslL3R2pQZUuIhOTYuSeThJ_CqtZRd7Kvobk5-cVxq9PXggvFFmj6Z3d1QpTyaAMaBrqPTqB62boJtrPjQeiFPLUnU7FNADYpyeayjINyUopDYnMnQG8HsV-_A59qbFqrWUaLZWnSqEW8hHRKSBbCo9Zbgp1SYbtEQ10T1UzOGGGylbQmXGMMO1oQ1Nmh5Zwu1UFR1jA"/>
+<div class="flex-grow">
+<p class="font-bold text-sm">Classic Beef Burger</p>
+<p class="text-primary text-sm font-medium">$5.50</p>
+</div>
+<div class="text-right">
+<p class="font-bold">1x</p>
+<button class="text-text-muted-light dark:text-text-muted-dark hover:text-red-500 text-xs">Remove</button>
+</div>
+</div>
+<!-- Cart Item 2 -->
+<div class="flex items-center gap-4">
+<img class="w-16 h-16 rounded-lg object-cover" data-alt="Seasoned Fries in cart" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWdTk4IGjTkMY95a8Ge-wNXCqiptuiE8UEgqZiwnzmt7CQw6dZDzcurRIf0cjMEFvSSmClT-40Gw3Ntk3y6rJ8XFRviQsw3J0V5Zh0ImP-W81VfSu2RasFOSxpQdk4IWZ3FL9FUvZHLsmstc9QlXDzigJ6w18RHY-cKcf4_7GmcTaOqDoJ1kd0HutfLE_hsdRh-6r0TfkhW23_hBj4gays6Et4NUKlAp_C3mo7iSjzn05aKOtlG0ZvmFuBq1ai_Ck4f1A6y5lVTqM"/>
+<div class="flex-grow">
+<p class="font-bold text-sm">Seasoned Fries</p>
+<p class="text-primary text-sm font-medium">$2.50</p>
+</div>
+<div class="text-right">
+<p class="font-bold">2x</p>
+<button class="text-text-muted-light dark:text-text-muted-dark hover:text-red-500 text-xs">Remove</button>
+</div>
+</div>
+<!-- Cart Item 3 -->
+<div class="flex items-center gap-4">
+<img class="w-16 h-16 rounded-lg object-cover" data-alt="Chocolate Milkshake in cart" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCDvh3vgdYCKXmUC3dyZ-mV27DtoT5Sc9kyxxpFDp384bdJstpOICP9h3dmlikgRd8enlvtbnUrDwG_maJ4CO59NuAffQwMqyK54_uXksJoxHgNC0eaUNzeRTEuGJaJ5ywOPG8gA9bx1X4SpckSC5I4kvr04HMbgBU-XQlwXB2dmWcKOGuQ5EXcOavaswNJuM8bQUPuPHCDodUJ-himtVXNHYSJCwQRLXBXM2RwJEVo0tzIRm-8jizzLT3DvkR6WKTTWJ5eDFrjOs"/>
+<div class="flex-grow">
+<p class="font-bold text-sm">Chocolate Milkshake</p>
+<p class="text-primary text-sm font-medium">$4.00</p>
+</div>
+<div class="text-right">
+<p class="font-bold">1x</p>
+<button class="text-text-muted-light dark:text-text-muted-dark hover:text-red-500 text-xs">Remove</button>
+</div>
+</div>
+</div>
+<div class="p-6 border-t border-border-light dark:border-border-dark mt-auto space-y-4">
+<div class="flex justify-between text-sm">
+<span class="text-text-muted-light dark:text-text-muted-dark">Subtotal</span>
+<span class="font-medium">$14.50</span>
+</div>
+<div class="flex justify-between text-sm">
+<span class="text-text-muted-light dark:text-text-muted-dark">Service Fee</span>
+<span class="font-medium">$1.00</span>
+</div>
+<div class="flex justify-between text-lg font-bold">
+<span>Total</span>
+<span>$15.50</span>
+</div>
+<button class="w-full flex items-center justify-center gap-2 h-12 rounded-lg bg-primary text-white font-bold hover:bg-primary/90 transition-colors">
+                        Checkout
+                    </button>
+</div>
+</aside>
+</div>
+</div>
+</body></html>

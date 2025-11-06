@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Menu Management - Campus Tuckshop</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#2b8cee",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101922",
+              "success": "#28A745",
+              "danger": "#DC3545",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+</head>
+<body class="font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden">
+<div class="flex flex-row min-h-screen">
+<!-- SideNavBar -->
+<aside class="flex h-screen min-h-screen w-64 flex-col justify-between border-r border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-background-dark">
+<div class="flex flex-col gap-8">
+<div class="flex items-center gap-2 px-2">
+<span class="material-symbols-outlined text-primary text-3xl">fastfood</span>
+<h2 class="text-xl font-bold text-[#111418] dark:text-white">Campus Eats</h2>
+</div>
+<div class="flex flex-col gap-4">
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800" href="#">
+<span class="material-symbols-outlined text-xl">dashboard</span>
+<p class="text-sm font-medium">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800" href="#">
+<span class="material-symbols-outlined text-xl">shopping_cart</span>
+<p class="text-sm font-medium">Orders</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg bg-primary/20 px-3 py-2 text-primary dark:bg-primary/30" href="#">
+<span class="material-symbols-outlined text-xl">restaurant_menu</span>
+<p class="text-sm font-medium">Menu</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800" href="#">
+<span class="material-symbols-outlined text-xl">settings</span>
+<p class="text-sm font-medium">Settings</p>
+</a>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-4">
+<div class="flex gap-3 items-center">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Tuckshop Staff Avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCUS_IOiQG8cq9yVP4kP84tkNu39myIVVVAmaY2MCC69X6iuzV2AIvPe59SAZJ_zKF9NimEQ9ugyDKTEisTlEa4wIBpRTOc_BTLzvsj2hs2FVtWEnPO9qEqWUnJBRcU_DAjgaRq9kjOynDGgSxupLZth8DKNTNc9hvRcYNNtX793qK4CPdJ6oM5sO_n1asB9oZbxdqetkP-xyALGURnbwMJFybsWjgvFaTKH58mgsh-aVmxvoaeVfwO5Sg832IkoPtMag5_ENxQ9tw");'></div>
+<div class="flex flex-col">
+<h1 class="text-[#111418] dark:text-white text-sm font-medium leading-normal">Tuckshop Staff</h1>
+<p class="text-[#617589] dark:text-gray-400 text-xs font-normal leading-normal">staff@campus.edu</p>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800" href="#">
+<span class="material-symbols-outlined text-xl">logout</span>
+<p class="text-sm font-medium leading-normal">Logout</p>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 p-8">
+<div class="mx-auto flex w-full max-w-7xl flex-col gap-6">
+<!-- PageHeading -->
+<div class="flex flex-wrap items-center justify-between gap-4">
+<div class="flex flex-col gap-1">
+<p class="text-[#111418] dark:text-white text-3xl font-bold tracking-tight">Menu Management</p>
+<p class="text-[#617589] dark:text-gray-400 text-base font-normal">Add, edit, and manage all items available in the tuckshop.</p>
+</div>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90">
+<span class="material-symbols-outlined text-lg">add</span>
+<span class="truncate">Add New Item</span>
+</button>
+</div>
+<!-- Search and Filter Section -->
+<div class="flex flex-wrap items-center gap-4">
+<!-- SearchBar -->
+<div class="flex-grow">
+<label class="flex flex-col min-w-40 h-11 w-full">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+<div class="text-[#617589] flex border-none bg-white dark:bg-background-dark dark:border-gray-700 items-center justify-center pl-4 rounded-l-lg border-r-0 border border-gray-200">
+<span class="material-symbols-outlined text-xl">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-lg border-y border-r border-gray-200 bg-white text-[#111418] placeholder:text-[#617589] focus:outline-0 focus:ring-2 focus:ring-primary/50 dark:bg-background-dark dark:text-white dark:border-gray-700 dark:focus:ring-primary/50 text-sm" placeholder="Search by item name..." value=""/>
+</div>
+</label>
+</div>
+<!-- Chips -->
+<div class="flex gap-2 overflow-x-auto pb-2">
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-primary/20 px-3 text-sm font-medium text-primary">All</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-white px-3 text-sm font-medium text-[#111418] hover:bg-gray-50 dark:bg-background-dark dark:text-white dark:hover:bg-gray-800">Drinks</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-white px-3 text-sm font-medium text-[#111418] hover:bg-gray-50 dark:bg-background-dark dark:text-white dark:hover:bg-gray-800">Snacks</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-white px-3 text-sm font-medium text-[#111418] hover:bg-gray-50 dark:bg-background-dark dark:text-white dark:hover:bg-gray-800">Hot Meals</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-white px-3 text-sm font-medium text-[#111418] hover:bg-gray-50 dark:bg-background-dark dark:text-white dark:hover:bg-gray-800">Desserts</button>
+</div>
+</div>
+<!-- Table -->
+<div class="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-background-dark">
+<div class="overflow-x-auto">
+<table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+<thead class="bg-gray-50 dark:bg-gray-800">
+<tr>
+<th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400" scope="col">Item</th>
+<th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400" scope="col">Category</th>
+<th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400" scope="col">Price</th>
+<th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400" scope="col">Availability</th>
+<th class="relative px-6 py-3" scope="col"><span class="sr-only">Actions</span></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-background-dark">
+<tr>
+<td class="whitespace-nowrap px-6 py-4">
+<div class="flex items-center gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-10 flex-shrink-0" data-alt="Classic Burger" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAJ7oBqJPN1fb78uNjI0CmHEFD6LA4KSALKefQ4lcI6zEzP1umCwY6MSYJuymXGrSL7qbK4VteJJxG6HWZ7YLyYjaFP1Qg7mw0Goiy1LFUKM-9PkdZYqaVQCYbXpFeqlgvUTZnAju0qL95Jydw1P7rgK2zC5EsCXd_inKfmE4q6OelYON9Ji49FoZs1P0HEKgF-ZyO2tnA8gkGJJRGjbEVTX8PotBRGME2v1FxiJ5Pjw7rLEno9YbFr0xuZqlRCPjPdMlT8-KcrqyA");'></div>
+<div class="text-sm font-medium text-gray-900 dark:text-white">Classic Burger</div>
+</div>
+</td>
+<td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500 dark:text-gray-400">Hot Meals</td>
+<td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500 dark:text-gray-400">$5.99</td>
+<td class="whitespace-nowrap px-6 py-4">
+<label class="relative inline-flex cursor-pointer items-center">
+<input checked="" class="peer sr-only" type="checkbox" value=""/>
+<div class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-success peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:border-gray-600 dark:bg-gray-700 dark:peer-focus:ring-green-800"></div>
+</label>
+</td>
+<td class="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
+<div class="flex items-center justify-end gap-4">
+<button class="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary"><span class="material-symbols-outlined">edit</span></button>
+<button class="text-gray-500 hover:text-danger dark:text-gray-400 dark:hover:text-danger"><span class="material-symbols-outlined">delete</span></button>
+</div>
+</td>
+</tr>
+<tr>
+<td class="whitespace-nowrap px-6 py-4">
+<div class="flex items-center gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-10 flex-shrink-0" data-alt="Cola Can" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDyFYh2pFfCT6HMjrtuRr1PS1MGrLc7svpbe6UTiAryvqEhmPPz16md5l5YcxLIEJzAcAMZth_Xr63WMAKz5mXRBIq9-i59A50bTNJvOGftEhvpc4tQxDiYnFn-y13sjOgGUKAqe1ARaPFSyYaaBMfILghY4hNdXAWYTVDs9qKLNwbYVfxsdMyVsHY8r390TsXjdGUlSFbNDIp5KgM__kYEvsIbATynTtPoXh_ONfnAQR4OYT-Y9COv03vqb_Rt7-pxRdF5bPuW0QM");'></div>
+<div class="text-sm font-medium text-gray-900 dark:text-white">Cola Can</div>
+</div>
+</td>
+<td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500 dark:text-gray-400">Drinks</td>
+<td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500 dark:text-gray-400">$1.50</td>
+<td class="whitespace-nowrap px-6 py-4">
+<label class="relative inline-flex cursor-pointer items-center">
+<input checked="" class="peer sr-only" type="checkbox" value=""/>
+<div class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-success peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:border-gray-600 dark:bg-gray-700 dark:peer-focus:ring-green-800"></div>
+</label>
+</td>
+<td class="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
+<div class="flex items-center justify-end gap-4">
+<button class="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary"><span class="material-symbols-outlined">edit</span></button>
+<button class="text-gray-500 hover:text-danger dark:text-gray-400 dark:hover:text-danger"><span class="material-symbols-outlined">delete</span></button>
+</div>
+</td>
+</tr>
+<tr>
+<td class="whitespace-nowrap px-6 py-4">
+<div class="flex items-center gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-10 flex-shrink-0" data-alt="Potato Chips" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAa2A_sQSfmtS90Zt7cfylUtgJjPfKORYtxZlwxXXKeiyw7Gvic2hCp1vhVL6ufZXi-cFSJe8E38jR2PIk6ds4BN60JC11IelN6cjzwNiuf8logh3o5IEtK9O5wMulz-qjIufBvqQHcFEyOuB4_GPlou40ifDDtekEfEE2sQIBV89BipfcQECY6laYbee9b-J5RqpRE7ySU9qbSIN3AE1W2NSljRLvH6Q0ky3lPqHgFBpcRT2ALIebJamn5B0y2xMKFTDYFETZgpEU");'></div>
+<div class="text-sm font-medium text-gray-900 dark:text-white">Potato Chips</div>
+</div>
+</td>
+<td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500 dark:text-gray-400">Snacks</td>
+<td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500 dark:text-gray-400">$2.00</td>
+<td class="whitespace-nowrap px-6 py-4">
+<label class="relative inline-flex cursor-pointer items-center">
+<input class="peer sr-only" type="checkbox" value=""/>
+<div class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-success peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:border-gray-600 dark:bg-gray-700 dark:peer-focus:ring-green-800"></div>
+</label>
+</td>
+<td class="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
+<div class="flex items-center justify-end gap-4">
+<button class="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary"><span class="material-symbols-outlined">edit</span></button>
+<button class="text-gray-500 hover:text-danger dark:text-gray-400 dark:hover:text-danger"><span class="material-symbols-outlined">delete</span></button>
+</div>
+</td>
+</tr>
+<tr>
+<td class="whitespace-nowrap px-6 py-4">
+<div class="flex items-center gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-10 flex-shrink-0" data-alt="Chocolate Brownie" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBy1Bk9lBHTIUs-hlxZWyywKwws63mpdK67NxCtcScQFDM6gtlNXzdvOLcjsYBGg-nOaiUc1euAL-EZZUOqhwu1rU6iBsf4T_XCuYuMpksckuqw_FHks3HCVZJO4dSjoWkV9lrr74bfx9rPwWFMnruiTGtv1lI35wiPWGPpyHg48Ft0EeOB5pWzU2j-jU2Q1jOM4nyt8nICivfdhtmxbTGIWzp4nmGp8Nki2S_vwx0uhdFSugnumWgIDrlXFeM9IXby9tAl7zOgP0g");'></div>
+<div class="text-sm font-medium text-gray-900 dark:text-white">Chocolate Brownie</div>
+</div>
+</td>
+<td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500 dark:text-gray-400">Desserts</td>
+<td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500 dark:text-gray-400">$3.50</td>
+<td class="whitespace-nowrap px-6 py-4">
+<label class="relative inline-flex cursor-pointer items-center">
+<input checked="" class="peer sr-only" type="checkbox" value=""/>
+<div class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-success peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:border-gray-600 dark:bg-gray-700 dark:peer-focus:ring-green-800"></div>
+</label>
+</td>
+<td class="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
+<div class="flex items-center justify-end gap-4">
+<button class="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary"><span class="material-symbols-outlined">edit</span></button>
+<button class="text-gray-500 hover:text-danger dark:text-gray-400 dark:hover:text-danger"><span class="material-symbols-outlined">delete</span></button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

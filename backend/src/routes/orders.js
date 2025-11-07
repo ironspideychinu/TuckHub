@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { authenticate, authorize, requireMicrosoftForStudent } from '../middlewares/auth.js';
-import { assignRunner, createOrder, getOrders, getOrdersForUser, updateOrderStatus, createPaymentIntent, verifyPayment } from '../controllers/orderController.js';
+import { assignRunner, createOrder, getOrders, getOrdersForUser, updateOrderStatus, createPaymentIntent, verifyPayment, getOrderById } from '../controllers/orderController.js';
 
 const router = Router();
 
@@ -11,5 +11,6 @@ router.get('/user/:id', authenticate, requireMicrosoftForStudent, getOrdersForUs
 router.get('/', authenticate, authorize('staff', 'admin'), getOrders);
 router.patch('/:id/status', authenticate, authorize('staff', 'admin'), updateOrderStatus);
 router.patch('/:id/assign-runner', authenticate, authorize('staff', 'admin'), assignRunner);
+router.get('/:id', authenticate, requireMicrosoftForStudent, getOrderById);
 
 export default router;

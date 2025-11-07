@@ -1,11 +1,21 @@
 "use client";
-import React from 'react';
+import React, { useState } from 'react';
 import { useCart } from '@/components/CartProvider';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
+import { useAuth } from '@/components/AuthProvider';
+import { apiFetch } from '@/lib/api';
+import { useRouter } from 'next/navigation';
+
+declare global {
+  interface Window { Razorpay: any; }
+}
 
 export default function CartPage() {
   const { items, remove, total, clear, add } = useCart();
+  const { user } = useAuth();
+  const router = useRouter();
+  const [paying, setPaying] = useState(false);
 
   const updateQuantity = (item: any, delta: number) => {
     const newQty = item.qty + delta;
@@ -25,6 +35,69 @@ export default function CartPage() {
   }
 
   const serviceFee = 5; // Example service fee
+
+  async function handleDirectPay() {
+    try {
+      if (!user) {
+        toast.error('Please login first.');
+        router.push('/auth/login');
+        return;
+      }
+      if (items.length === 0) {
+        toast.error('Cart empty');
+        return;
+      }
+      if (typeof window === 'undefined' || !window.Razorpay) {
+        toast.error('Payment SDK not loaded yet. Please try again in a moment.');
+        return;
+      }
+      setPaying(true);
+      const { razorpayOrderId, amount, currency, orderId } = await apiFetch<{ razorpayOrderId: string; amount: number; currency: string; orderId: string; }>(
+        '/api/orders/create-payment-intent',
+        { method: 'POST', body: { items } }
+      );
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || 'rzp_test_YOUR_KEY_ID',
+        amount: Math.round(amount * 100),
+        currency,
+        name: 'TuckHub',
+        description: 'Campus Food Order',
+        order_id: razorpayOrderId,
+        prefill: { name: user.name, email: user.email },
+        handler: async (response: any) => {
+          try {
+            await apiFetch('/api/orders/verify-payment', {
+              method: 'POST',
+              body: {
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+                orderId,
+              },
+            });
+            clear();
+            toast.success('Order placed!');
+            router.push(`/orders/${orderId}`);
+          } catch (err: any) {
+            toast.error(err.message || 'Verification failed');
+          }
+        },
+        theme: { color: '#ee8c2b' },
+        modal: {
+          ondismiss: () => {
+            setPaying(false);
+            toast.error('Payment cancelled');
+          },
+        },
+      };
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+      setPaying(false);
+    } catch (err: any) {
+      toast.error(err.message || 'Payment init failed');
+      setPaying(false);
+    }
+  }
 
   return (
     <main className="flex-1">
@@ -94,9 +167,13 @@ export default function CartPage() {
                     <span>Total</span>
                     <span>₹{(total + serviceFee).toFixed(2)}</span>
                   </div>
-                  <Link href="/checkout" className="mt-6 flex w-full items-center justify-center rounded-lg h-12 px-4 btn-primary text-base font-bold">
-                    Proceed to Checkout
-                  </Link>
+                  <button
+                    onClick={handleDirectPay}
+                    disabled={paying}
+                    className="mt-6 flex w-full items-center justify-center rounded-lg h-12 px-4 btn-primary text-base font-bold disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {paying ? 'Processing...' : 'Pay Now'}
+                  </button>
                   <button
                     onClick={() => {
                       clear();

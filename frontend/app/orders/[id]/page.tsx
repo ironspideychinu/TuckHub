@@ -8,13 +8,14 @@ import { useAuth } from '@/components/AuthProvider';
 import { format } from 'date-fns';
 import toast from 'react-hot-toast';
 
-const STATUS_FLOW = ['placed', 'making', 'ready', 'delivering', 'completed'] as const;
+// Self-pickup flow: placed -> making -> ready -> completed
+const STATUS_FLOW = ['placed', 'making', 'ready', 'completed'] as const;
 
 const STATUS_INFO: Record<string, { label: string; icon: string; description: string; }> = {
   placed: { label: 'Order Placed', icon: 'receipt_long', description: 'We have received your order and will begin preparing it shortly.' },
   making: { label: 'Being Prepared', icon: 'soup_kitchen', description: 'Our chefs are busy preparing your delicious meal.' },
   ready: { label: 'Ready for Pickup', icon: 'local_mall', description: 'Your order is ready! Please come and collect it.' },
-  delivering: { label: 'Out for Delivery', icon: 'two_wheeler', description: 'Your order is on its way to you.' },
+  // delivering removed for tuckshop context
   completed: { label: 'Delivered', icon: 'check_circle', description: 'Your order has been successfully delivered. Enjoy!' },
   cancelled: { label: 'Cancelled', icon: 'cancel', description: 'This order has been cancelled.' },
 };
@@ -27,15 +28,22 @@ export default function OrderDetailPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!id || !user) {
-      setLoading(false);
-      return;
+    let cancelled = false;
+    async function load() {
+      if (!id || !user?.id) {
+        setLoading(false);
+        return;
+      }
+      try {
+        const res = await apiFetch<{ order: any }>(`/api/orders/${id}`);
+        if (!cancelled) setOrder(res.order);
+      } catch (err: any) {
+        if (!cancelled) toast.error(err.message || 'Failed to fetch order details.');
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
     }
-
-    apiFetch<{ order: any }>(`/api/orders/${id}`)
-      .then((res) => setOrder(res.order))
-      .catch(() => toast.error("Failed to fetch order details."))
-      .finally(() => setLoading(false));
+    load();
 
     const s = getSocket();
     const onOrderUpdated = (payload: any) => {
@@ -45,8 +53,8 @@ export default function OrderDetailPage() {
       }
     };
     s.on('order:updated', onOrderUpdated);
-    return () => { s.off('order:updated', onOrderUpdated); };
-  }, [id, user]);
+    return () => { cancelled = true; s.off('order:updated', onOrderUpdated); };
+  }, [id, user?.id]);
 
   if (loading) {
     return <div className="flex-1 flex items-center justify-center"><div className="loader"></div></div>;

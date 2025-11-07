@@ -247,11 +247,32 @@ export async function getOrders(req, res, next) {
   }
 }
 
+export async function getOrderById(req, res, next) {
+  try {
+    const { id } = req.params;
+    const order = await Order.findById(id);
+    if (!order) {
+      res.status(404);
+      throw new Error('Order not found');
+    }
+    const isOwner = String(order.userId) === String(req.user.id);
+    const isStaff = ['admin', 'staff'].includes(req.user.role);
+    if (!isOwner && !isStaff) {
+      res.status(403);
+      throw new Error('Forbidden');
+    }
+    res.json({ order });
+  } catch (err) {
+    next(err);
+  }
+}
+
 export async function updateOrderStatus(req, res, next) {
   try {
     const { id } = req.params;
     const { status } = req.body;
-    const valid = ['placed', 'making', 'ready', 'delivering', 'completed'];
+    // Delivery is not used in tuckshop; allowed flow is placed -> making -> ready -> completed
+    const valid = ['placed', 'making', 'ready', 'completed'];
     if (!valid.includes(status)) {
       res.status(400);
       throw new Error('Invalid status');

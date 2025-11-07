@@ -22,7 +22,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const t = localStorage.getItem('token');
     if (t) {
       setToken(t);
-      apiFetch<{ user: User }>(`/api/auth/me`, { token: t }).then((res) => setUser(res.user)).catch(() => {});
+      apiFetch<{ user: any }>(`/api/auth/me`, { token: t })
+        .then((res) => {
+          // Normalize shape: backend /me returns Mongoose doc with _id
+          const normalized: User = {
+            id: res.user.id || res.user._id,
+            name: res.user.name,
+            email: res.user.email,
+            role: res.user.role,
+          };
+          setUser(normalized);
+          // keep a handy userId for places that read it directly
+          localStorage.setItem('userId', normalized.id);
+        })
+        .catch(() => {});
     }
   }, []);
 
@@ -44,6 +57,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   function logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('userId');
     setToken(null);
     setUser(null);
   }

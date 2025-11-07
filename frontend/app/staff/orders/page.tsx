@@ -1,178 +1,272 @@
 "use client";
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useAuth } from '@/components/AuthProvider';
+import useSWR from 'swr';
 import { apiFetch } from '@/lib/api';
-import { getSocket } from '@/lib/socket';
-import { RoleGate } from '@/components/RoleGate';
+import { useRouter } from 'next/navigation';
 import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
-import toast from 'react-hot-toast';
 import { format } from 'date-fns';
+import toast from 'react-hot-toast';
+import { io } from 'socket.io-client';
 
-const STATUSES = ['placed', 'making', 'ready', 'delivering', 'completed'] as const;
-type OrderStatus = typeof STATUSES[number];
+interface OrderItem {
+  menuItem: { name: string };
+  quantity: number;
+}
 
-const STATUS_CONFIG: Record<OrderStatus, { label: string; icon: string; }> = {
-  placed: { label: 'New Orders', icon: 'receipt_long' },
-  making: { label: 'In Kitchen', icon: 'soup_kitchen' },
-  ready: { label: 'Ready for Pickup', icon: 'local_mall' },
-  delivering: { label: 'Out for Delivery', icon: 'two_wheeler' },
-  completed: { label: 'Completed', icon: 'check_circle' },
+interface Order {
+  _id: string;
+  orderNumber?: string; // not guaranteed in current schema
+  user?: { name?: string };
+  items: OrderItem[];
+  status: 'placed' | 'making' | 'ready' | 'completed';
+  createdAt: string;
+  totalAmount?: number;
+}
+
+const statusConfig: Record<Order['status'], { title: string; color: string; bgColor: string; textColor: string; }> = {
+  placed: {
+    title: 'Placed',
+    color: 'text-gray-800 dark:text-white',
+    bgColor: 'bg-gray-200 dark:bg-gray-700',
+    textColor: 'text-gray-700 dark:text-gray-200',
+  },
+  making: {
+    title: 'Making',
+    color: 'text-yellow-600 dark:text-yellow-400',
+    bgColor: 'bg-yellow-100 dark:bg-yellow-900',
+    textColor: 'text-yellow-800 dark:text-yellow-300',
+  },
+  ready: {
+    title: 'Ready',
+    color: 'text-green-600 dark:text-green-400',
+    bgColor: 'bg-green-100 dark:bg-green-900',
+    textColor: 'text-green-800 dark:text-green-300',
+  },
+  completed: {
+    title: 'Completed',
+    color: 'text-blue-600 dark:text-blue-400',
+    bgColor: 'bg-blue-100 dark:bg-blue-900',
+    textColor: 'text-blue-800 dark:text-blue-300',
+  },
 };
 
-type Order = any;
-
-function OrderCard({ order, index }: { order: Order, index: number }) {
-  return (
-    <Draggable draggableId={order._id} index={index}>
-      {(provided, snapshot) => (
-        <div
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-          className={`card p-4 mb-3 transition-shadow ${snapshot.isDragging ? 'shadow-2xl scale-105' : 'shadow-md'}`}
-        >
-          <div className="flex items-start justify-between mb-2">
-            <div>
-              <p className="font-bold text-text-light dark:text-text-dark">#{order._id.slice(-6)}</p>
-              <p className="text-xs text-text-muted-light dark:text-text-muted-dark">{format(new Date(order.createdAt), "h:mm a")}</p>
-            </div>
-            <p className="font-bold text-primary">₹{order.totalAmount.toFixed(2)}</p>
-          </div>
-          <div className="space-y-1">
-            {order.items.map((item: any) => (
-              <div key={item._id} className="text-sm text-text-light dark:text-text-dark">
-                <span className="font-medium">{item.qty}×</span> {item.name}
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-    </Draggable>
-  );
-}
-
-function OrderColumn({ status, orders }: { status: OrderStatus, orders: Order[] }) {
-  const config = STATUS_CONFIG[status];
-  return (
-    <div className="flex flex-col w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 flex-shrink-0">
-      <div className="sticky top-0 z-10 glass rounded-t-lg p-3 mb-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-primary">{config.icon}</span>
-            <h2 className="font-bold text-text-light dark:text-text-dark">{config.label}</h2>
-          </div>
-          <span className="font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-md text-sm">{orders.length}</span>
-        </div>
-      </div>
-      <Droppable droppableId={status}>
-        {(provided, snapshot) => (
-          <div
-            ref={provided.innerRef}
-            {...provided.droppableProps}
-            className={`flex-grow min-h-[200px] rounded-b-lg p-2 transition-colors ${snapshot.isDraggingOver ? 'bg-primary/10' : ''}`}
-          >
-            {orders.map((order, index) => (
-              <OrderCard key={order._id} order={order} index={index} />
-            ))}
-            {provided.placeholder}
-            {orders.length === 0 && (
-              <div className="text-center py-10 text-text-muted-light dark:text-text-muted-dark">
-                <div className="text-3xl mb-2">{config.icon}</div>
-                <p className="text-sm">No orders here</p>
-              </div>
-            )}
-          </div>
-        )}
-      </Droppable>
-    </div>
-  );
-}
-
-export default function StaffOrdersPage() {
+export default function StaffOrderBoardPage() {
+  const { user } = useAuth();
+  const router = useRouter();
   const [orders, setOrders] = useState<Order[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { data: fetchedOrders } = useSWR<Order[]>('/api/orders', apiFetch);
 
   useEffect(() => {
-    apiFetch<{ orders: Order[] }>(`/api/orders`)
-      .then((res) => setOrders(res.orders))
-      .catch(() => toast.error("Failed to fetch orders."))
-      .finally(() => setLoading(false));
+    if (fetchedOrders) {
+      setOrders(fetchedOrders);
+    }
+  }, [fetchedOrders]);
 
-    const s = getSocket();
-    const onOrderCreated = (payload: any) => {
-      setOrders((prev) => [payload.order, ...prev]);
-      toast.success(`New order #${payload.order._id.slice(-6)} received!`);
-    };
-    const onOrderUpdated = (payload: any) => {
-      setOrders((prev) => prev.map((o) => o._id === payload.order._id ? payload.order : o));
-    };
-    s.on('order:created', onOrderCreated);
-    s.on('order:updated', onOrderUpdated);
+  useEffect(() => {
+    const socket = io(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000');
+    
+    socket.on('orderPlaced', (order: Order) => {
+      setOrders((prev) => [order, ...prev]);
+      toast.success(`New order #${order.orderNumber}`);
+    });
+
+    socket.on('orderUpdated', (updatedOrder: Order) => {
+      setOrders((prev) =>
+        prev.map((order) => (order._id === updatedOrder._id ? updatedOrder : order))
+      );
+    });
+
     return () => {
-      s.off('order:created', onOrderCreated);
-      s.off('order:updated', onOrderUpdated);
+      socket.disconnect();
     };
   }, []);
 
-  const groupedOrders = useMemo(() => {
-    const grouped: Record<OrderStatus, Order[]> = { placed: [], making: [], ready: [], delivering: [], completed: [] };
-    for (const order of orders) {
-      if (grouped[order.status as OrderStatus]) {
-        grouped[order.status as OrderStatus].push(order);
-      }
-    }
-    // Sort each group by creation date
-    for (const status of STATUSES) {
-        grouped[status].sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
-    }
-    return grouped;
-  }, [orders]);
+  if (user?.role !== 'staff' && user?.role !== 'admin') {
+    router.push('/');
+    return null;
+  }
 
-  const onDragEnd = async (result: DropResult) => {
-    const { source, destination, draggableId } = result;
+  const getOrdersByStatus = (status: string) => {
+    return orders.filter((order) => order.status === status);
+  };
 
-    if (!destination || (source.droppableId === destination.droppableId && source.index === destination.index)) {
-      return;
-    }
+  const getTimeAgo = (date: string) => {
+    const now = new Date();
+    const orderDate = new Date(date);
+    const diff = Math.floor((now.getTime() - orderDate.getTime()) / 60000);
+    if (diff < 1) return 'Just now';
+    if (diff === 1) return '1 min ago';
+    return `${diff} min ago`;
+  };
 
-    const newStatus = destination.droppableId as OrderStatus;
-    const originalStatus = source.droppableId as OrderStatus;
-    
-    // Optimistic UI update
-    const movedOrder = orders.find(o => o._id === draggableId);
-    if (!movedOrder) return;
+  const handleDragEnd = async (result: DropResult) => {
+    const { destination, source, draggableId } = result;
 
-    const newOrders = orders.map(o => o._id === draggableId ? { ...o, status: newStatus } : o);
-    setOrders(newOrders);
+    if (!destination) return;
+    if (destination.droppableId === source.droppableId && destination.index === source.index) return;
+
+  const newStatus = destination.droppableId as Order['status'];
+    const orderId = draggableId;
 
     try {
-      await apiFetch(`/api/orders/${draggableId}/status`, { method: 'PATCH', body: { status: newStatus } });
-      toast.success(`Order #${draggableId.slice(-6)} moved to ${STATUS_CONFIG[newStatus].label}`);
-    } catch (error) {
-      toast.error('Failed to update order status.');
-      // Revert on failure
-      setOrders(orders);
+      await apiFetch(`/api/orders/${orderId}`, {
+        method: 'PATCH',
+        body: { status: newStatus },
+      });
+
+      setOrders((prev) =>
+        prev.map((order) => (order._id === orderId ? { ...order, status: newStatus } : order))
+      );
+
+      toast.success(`Order moved to ${statusConfig[newStatus].title}`);
+    } catch (error: any) {
+      toast.error(error.message || 'Failed to update order');
     }
   };
 
   return (
-    <RoleGate roles={["staff", "admin"]}>
-      <div className="flex flex-col h-[calc(100vh-65px)] overflow-hidden">
-        <div className="p-4 sm:p-6 lg:p-8 flex-shrink-0">
-          <h1 className="text-4xl font-black tracking-tight">Order Dashboard</h1>
-        </div>
-
-        {loading ? (
-          <div className="flex-1 flex items-center justify-center"><div className="loader"></div></div>
-        ) : (
-          <DragDropContext onDragEnd={onDragEnd}>
-            <div className="flex-1 flex gap-6 overflow-x-auto px-4 sm:px-6 lg:px-8 pb-4">
-              {STATUSES.map((status) => (
-                <OrderColumn key={status} status={status} orders={groupedOrders[status]} />
-              ))}
+    <div className="flex w-full min-h-screen">
+      {/* Sidebar */}
+      <aside className="sticky top-0 h-screen w-64 flex-shrink-0 bg-white dark:bg-surface-dark border-r border-border-light dark:border-border-dark">
+        <div className="flex h-full flex-col justify-between p-4">
+          <div className="flex flex-col gap-8">
+            <div className="flex items-center gap-2 px-3">
+              <span className="material-symbols-outlined text-primary text-3xl">fastfood</span>
+              <h1 className="text-text-light dark:text-text-dark text-lg font-bold">Campus Eats</h1>
             </div>
-          </DragDropContext>
-        )}
-      </div>
-    </RoleGate>
+            <div className="flex flex-col gap-2">
+              <a
+                href="/staff/orders"
+                className="flex items-center gap-3 rounded-lg bg-primary/10 px-3 py-2 text-primary dark:bg-primary/20"
+              >
+                <span className="material-symbols-outlined">view_kanban</span>
+                <p className="text-sm font-medium">Order Board</p>
+              </a>
+              <a
+                href="/staff/menu"
+                className="flex items-center gap-3 px-3 py-2 text-text-muted-light dark:text-text-muted-dark hover:bg-surface-light dark:hover:bg-gray-800 rounded-lg"
+              >
+                <span className="material-symbols-outlined">menu_book</span>
+                <p className="text-sm font-medium">Menu</p>
+              </a>
+              <a
+                href="/admin/reports"
+                className="flex items-center gap-3 px-3 py-2 text-text-muted-light dark:text-text-muted-dark hover:bg-surface-light dark:hover:bg-gray-800 rounded-lg"
+              >
+                <span className="material-symbols-outlined">bar_chart</span>
+                <p className="text-sm font-medium">Reports</p>
+              </a>
+            </div>
+          </div>
+          <div className="flex flex-col gap-1">
+            <button className="flex items-center gap-3 px-3 py-2 text-text-muted-light dark:text-text-muted-dark hover:bg-surface-light dark:hover:bg-gray-800 rounded-lg cursor-pointer">
+              <span className="material-symbols-outlined">logout</span>
+              <p className="text-sm font-medium">Log Out</p>
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      {/* Main Content */}
+      <main className="flex-1 flex flex-col h-screen overflow-hidden">
+        {/* Header */}
+        <header className="flex-shrink-0 flex items-center justify-between p-6 border-b border-border-light dark:border-border-dark">
+          <p className="text-text-light dark:text-text-dark text-2xl font-bold">
+            Tuckshop Order Board
+          </p>
+          <div className="flex items-center gap-4">
+            <button className="relative rounded-full p-2 text-text-muted-light dark:text-text-muted-dark hover:bg-surface-light dark:hover:bg-gray-800">
+              <span className="material-symbols-outlined">notifications</span>
+              {orders.filter(o => o.status === 'placed').length > 0 && (
+                <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-red-600"></span>
+              )}
+            </button>
+            <div className="flex items-center gap-3">
+              <div className="bg-primary text-white flex items-center justify-center rounded-full size-10 font-bold">
+                {user?.name?.charAt(0).toUpperCase()}
+              </div>
+              <div className="flex flex-col">
+                <h1 className="text-text-light dark:text-text-dark text-base font-medium leading-normal">
+                  {user?.name}
+                </h1>
+                <p className="text-text-muted-light dark:text-text-muted-dark text-sm font-normal leading-normal">
+                  Tuckshop Staff
+                </p>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        {/* Kanban Board */}
+        <DragDropContext onDragEnd={handleDragEnd}>
+          <div className="flex-1 grid grid-cols-4 gap-6 p-6 overflow-x-auto">
+            {(['placed', 'making', 'ready', 'completed'] as const).map((status) => {
+              const statusOrders = getOrdersByStatus(status);
+              const config = statusConfig[status];
+
+              return (
+                <div
+                  key={status}
+                  className="flex flex-col bg-surface-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-lg"
+                >
+                  <div className="flex items-center justify-between p-4 border-b border-border-light dark:border-border-dark">
+                    <h2 className={`font-bold ${config.color}`}>{config.title}</h2>
+                    <span className={`px-2 py-1 text-sm font-semibold ${config.textColor} ${config.bgColor} rounded-full`}>
+                      {statusOrders.length}
+                    </span>
+                  </div>
+
+                  <Droppable droppableId={status}>
+                    {(provided) => (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.droppableProps}
+                        className="flex-1 p-4 space-y-4 overflow-y-auto"
+                      >
+                        {statusOrders.map((order, index) => (
+                          <Draggable key={order._id} draggableId={order._id} index={index}>
+                            {(provided) => (
+                              <div
+                                ref={provided.innerRef}
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                                className={`bg-white dark:bg-gray-800 p-4 rounded-lg shadow cursor-grab ${
+                                  status === 'completed' ? 'opacity-70' : ''
+                                }`}
+                              >
+                                <div className="flex justify-between items-start mb-2">
+                                  <p className="font-bold text-text-light dark:text-text-dark">
+                                    #{order.orderNumber}
+                                  </p>
+                                  <span className="text-xs text-text-muted-light dark:text-text-muted-dark">
+                                    {getTimeAgo(order.createdAt)}
+                                  </span>
+                                </div>
+                                <div className="space-y-1 text-sm text-text-light dark:text-text-dark">
+                                  {order.items.map((item, idx) => (
+                                    <p key={idx}>
+                                      {item.quantity}x {item.menuItem.name}
+                                    </p>
+                                  ))}
+                                </div>
+                                <p className="text-xs text-text-muted-light dark:text-text-muted-dark mt-2">
+                                  {order.user?.name || 'Student'}
+                                </p>
+                              </div>
+                            )}
+                          </Draggable>
+                        ))}
+                        {provided.placeholder}
+                      </div>
+                    )}
+                  </Droppable>
+                </div>
+              );
+            })}
+          </div>
+        </DragDropContext>
+      </main>
+    </div>
   );
 }

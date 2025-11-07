@@ -3,7 +3,9 @@ import "./globals.css";
 import { AuthProvider } from "@/components/AuthProvider";
 import { CartProvider } from "@/components/CartProvider";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import { Navbar } from "@/components/Navbar";
+import dynamic from 'next/dynamic';
+
+const Navbar = dynamic(() => import('@/components/Navbar').then(m => m.Navbar), { ssr: false });
 
 export const metadata: Metadata = {
   title: "TuckHub - Campus Food Ordering",
@@ -24,7 +26,7 @@ export default function RootLayout({
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
         <script src="https://checkout.razorpay.com/v1/checkout.js" async></script>
       </head>
-      <body className="bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark font-sans antialiased">
+      <body className="bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark font-sans antialiased" suppressHydrationWarning>
         <ThemeProvider>
           <AuthProvider>
             <CartProvider>

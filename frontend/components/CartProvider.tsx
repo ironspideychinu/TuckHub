@@ -15,15 +15,29 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    const raw = localStorage.getItem('cart');
-    if (raw) setItems(JSON.parse(raw));
+    try {
+      const raw = localStorage.getItem('cart');
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) {
+          setItems(parsed);
+        }
+      }
+    } catch (e) {
+      console.warn('Failed to parse cart from localStorage');
+      localStorage.removeItem('cart');
+    } finally {
+      setLoaded(true);
+    }
   }, []);
 
   useEffect(() => {
+    if (!loaded) return; // Prevent overwriting before initial load (React 18 strict mode double-invoke)
     localStorage.setItem('cart', JSON.stringify(items));
-  }, [items]);
+  }, [items, loaded]);
 
   function add(item: CartItem) {
     setItems((prev) => {

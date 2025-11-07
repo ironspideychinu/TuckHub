@@ -11,7 +11,6 @@ const STATUS_STYLES: Record<string, { icon: string; color: string; }> = {
   placed: { icon: 'receipt_long', color: 'bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300' },
   making: { icon: 'soup_kitchen', color: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/50 dark:text-yellow-300' },
   ready: { icon: 'local_mall', color: 'bg-teal-100 text-teal-700 dark:bg-teal-900/50 dark:text-teal-300' },
-  delivering: { icon: 'two_wheeler', color: 'bg-purple-100 text-purple-700 dark:bg-purple-900/50 dark:text-purple-300' },
   completed: { icon: 'check_circle', color: 'bg-green-100 text-green-700 dark:bg-green-900/50 dark:text-green-300' },
   cancelled: { icon: 'cancel', color: 'bg-red-100 text-red-700 dark:bg-red-900/50 dark:text-red-300' },
 };
@@ -22,17 +21,17 @@ export default function OrdersPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!user) {
+    if (!user?.id) {
       setLoading(false);
       return;
-    };
+    }
     apiFetch<{ orders: any[] }>(`/api/orders/user/${user.id}`)
       .then((res) => setOrders(res.orders.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())))
       .catch(() => toast.error("Failed to fetch orders."))
       .finally(() => setLoading(false));
 
     const s = getSocket();
-    const userId = user.id;
+  const userId = user.id;
     
     const onOrderCreated = (payload: any) => {
       if (payload.order.userId === userId) {

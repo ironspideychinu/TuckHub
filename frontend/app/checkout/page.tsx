@@ -24,6 +24,11 @@ export default function CheckoutPage() {
   async function handlePayment() {
     try {
       setLoading(true);
+      if (typeof window === 'undefined' || !window.Razorpay) {
+        toast.error('Payment SDK not loaded yet. Please try again in a moment.');
+        setLoading(false);
+        return;
+      }
       
       if (!user) {
         toast.error('Please login to place an order.');

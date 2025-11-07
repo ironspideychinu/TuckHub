@@ -5,8 +5,10 @@ import { createMenuItem, deleteMenuItem, getMenu, updateMenuItem } from '../cont
 const router = Router();
 
 router.get('/', getMenu);
-router.post('/', authenticate, authorize('admin'), createMenuItem);
-router.patch('/:id', authenticate, authorize('admin'), updateMenuItem);
-router.delete('/:id', authenticate, authorize('admin'), deleteMenuItem);
+// Allow both staff and admin to manage menu items
+// Only staff (tuckshop) can mutate menu; admin observes via reports/users
+router.post('/', authenticate, authorize('staff'), createMenuItem);
+router.patch('/:id', authenticate, authorize('staff'), updateMenuItem);
+router.delete('/:id', authenticate, authorize('staff'), deleteMenuItem);
 
 export default router;

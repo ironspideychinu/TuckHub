@@ -10,6 +10,7 @@ type AuthContextType = {
   login: (email: string, password: string) => Promise<void>;
   register: (name: string, email: string, password: string) => Promise<void>;
   logout: () => void;
+  initializing: boolean;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -17,6 +18,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
+  const [initializing, setInitializing] = useState(true);
 
   useEffect(() => {
     const t = localStorage.getItem('token');
@@ -35,7 +37,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           // keep a handy userId for places that read it directly
           localStorage.setItem('userId', normalized.id);
         })
-        .catch(() => {});
+        .catch(() => {})
+        .finally(() => setInitializing(false));
+    } else {
+      setInitializing(false);
     }
   }, []);
 
@@ -62,7 +67,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(null);
   }
 
-  return <AuthContext.Provider value={{ user, token, login, register, logout }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ user, token, login, register, logout, initializing }}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth() {

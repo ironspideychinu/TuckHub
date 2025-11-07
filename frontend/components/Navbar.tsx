@@ -7,7 +7,7 @@ import { ThemeToggle } from './ThemeToggle';
 import { usePathname } from 'next/navigation';
 
 export function Navbar() {
-  const { user, logout } = useAuth();
+  const { user, logout, initializing } = useAuth();
   const { items } = useCart();
   const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
@@ -20,12 +20,15 @@ export function Navbar() {
   const cartCount = items.reduce((sum, item) => sum + item.qty, 0);
 
   const navLinks = user ? [
-    { href: '/menu', label: 'Menu', icon: 'restaurant_menu', roles: ['student', 'staff', 'runner', 'admin'] },
+    // Student
+    { href: '/menu', label: 'Menu', icon: 'restaurant_menu', roles: ['student', 'staff', 'admin'] },
     { href: '/cart', label: 'Cart', icon: 'shopping_cart', roles: ['student'] },
     { href: '/orders', label: 'My Orders', icon: 'receipt_long', roles: ['student'] },
-    { href: '/staff/orders', label: 'Orders', icon: 'view_kanban', roles: ['staff', 'admin'] },
-    { href: '/staff/menu', label: 'Manage Menu', icon: 'inventory_2', roles: ['staff', 'admin'] },
-    { href: '/runner/tasks', label: 'Deliveries', icon: 'two_wheeler', roles: ['runner'] },
+    // Staff (tuckshop)
+    { href: '/staff/orders', label: 'Orders', icon: 'view_kanban', roles: ['staff'] },
+    { href: '/staff/orders/history', label: 'History', icon: 'history', roles: ['staff'] },
+    { href: '/staff/menu', label: 'Manage Menu', icon: 'inventory_2', roles: ['staff'] },
+    // Admin (website management)
     { href: '/admin/reports', label: 'Reports', icon: 'stacked_bar_chart', roles: ['admin'] },
     { href: '/admin/users', label: 'Users', icon: 'group', roles: ['admin'] },
     { href: '/admin/menu', label: 'Categories', icon: 'category', roles: ['admin'] },
@@ -67,7 +70,7 @@ export function Navbar() {
           <div className="flex items-center gap-3">
             <ThemeToggle />
             
-            {mounted && user ? (
+            {mounted && !initializing && user ? (
               <>
                 {user.role === 'student' && (
                   <Link
@@ -99,14 +102,14 @@ export function Navbar() {
                   </button>
                 </div>
               </>
-            ) : (
+            ) : (!initializing && (
               <Link
                 href="/auth/login"
                 className="btn btn-primary px-6"
               >
                 Log In
               </Link>
-            )}
+            ))}
           </div>
         </div>
       </nav>

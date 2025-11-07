@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { apiFetch } from '@/lib/api';
 import { useCart } from '@/components/CartProvider';
+import { useAuth } from '@/components/AuthProvider';
 import { getSocket } from '@/lib/socket';
 
 export default function MenuPage() {
@@ -10,6 +11,7 @@ export default function MenuPage() {
   const [filter, setFilter] = useState<string>('all');
   const [search, setSearch] = useState<string>('');
   const { add } = useCart();
+  const { user } = useAuth();
 
   useEffect(() => {
     apiFetch<{ items: any[] }>(`/api/menu`).then((res) => setItems(res.items));
@@ -119,17 +121,22 @@ export default function MenuPage() {
                   </span>
                 </div>
                 
-                <button
-                  className={`w-full py-2 rounded-lg font-medium transition-colors ${
-                    item.available
-                      ? 'bg-orange-600 text-white hover:bg-orange-700'
-                      : 'bg-slate-200 text-slate-400 cursor-not-allowed'
-                  }`}
-                  disabled={!item.available}
-                  onClick={() => add({ itemId: item._id, name: item.name, price: item.price, qty: 1 })}
-                >
-                  {item.available ? 'Add to Cart' : 'Unavailable'}
-                </button>
+                {user?.role === 'student' && (
+                  <button
+                    className={`w-full py-2 rounded-lg font-medium transition-colors ${
+                      item.available
+                        ? 'bg-orange-600 text-white hover:bg-orange-700'
+                        : 'bg-slate-200 text-slate-400 cursor-not-allowed'
+                    }`}
+                    disabled={!item.available}
+                    onClick={() => add({ itemId: item._id, name: item.name, price: item.price, qty: 1 })}
+                  >
+                    {item.available ? 'Add to Cart' : 'Unavailable'}
+                  </button>
+                )}
+                {user && user.role !== 'student' && (
+                  <div className="text-xs text-slate-500 font-medium">Staff view (cart disabled)</div>
+                )}
               </div>
             </div>
           ))}

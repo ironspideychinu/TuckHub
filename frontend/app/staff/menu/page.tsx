@@ -14,6 +14,7 @@ interface MenuItem {
   category: { _id: string; name: string };
   available: boolean;
   image?: string;
+  stock?: number;
 }
 
 interface Category {
@@ -34,17 +35,21 @@ export default function StaffMenuPage() {
     price: '',
     category: '',
     available: true,
+    stock: '' as any,
   });
 
-  const { data: menuItems } = useSWR<MenuItem[]>('/api/menu', apiFetch);
-  const { data: categories } = useSWR<Category[]>('/api/categories', apiFetch);
+  const { data: menuResp } = useSWR<{ items: MenuItem[] }>('/api/menu', apiFetch);
+  const { data: catResp } = useSWR<{ categories: Category[] }>('/api/categories', apiFetch);
 
-  if (user?.role !== 'staff' && user?.role !== 'admin') {
+  if (user?.role !== 'staff') {
     router.push('/');
     return null;
   }
 
-  const filteredItems = menuItems?.filter((item) => {
+  const items = menuResp?.items || [];
+  const categories = catResp?.categories || [];
+
+  const filteredItems = items.filter((item) => {
     const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = selectedCategory === 'all' || item.category.name === selectedCategory;
     return matchesSearch && matchesCategory;
@@ -54,18 +59,18 @@ export default function StaffMenuPage() {
     e.preventDefault();
     try {
       const endpoint = editingItem ? `/api/menu/${editingItem._id}` : '/api/menu';
-      const method = editingItem ? 'PUT' : 'POST';
+      const method = editingItem ? 'PATCH' : 'POST';
       
       await apiFetch(endpoint, {
         method,
-        body: { ...formData, price: parseFloat(formData.price) },
+        body: { ...formData, price: parseFloat(formData.price), stock: formData.stock === '' ? undefined : parseInt(String(formData.stock), 10) },
       });
 
       mutate('/api/menu');
       toast.success(editingItem ? 'Item updated successfully!' : 'Item added successfully!');
       setShowAddModal(false);
       setEditingItem(null);
-      setFormData({ name: '', description: '', price: '', category: '', available: true });
+      setFormData({ name: '', description: '', price: '', category: '', available: true, stock: '' });
     } catch (error: any) {
       toast.error(error.message || 'Failed to save item');
     }
@@ -91,20 +96,30 @@ export default function StaffMenuPage() {
       price: item.price.toString(),
       category: item.category._id,
       available: item.available,
+      stock: typeof item.stock === 'number' ? String(item.stock) : '',
     });
     setShowAddModal(true);
   };
 
   const toggleAvailability = async (item: MenuItem) => {
     try {
-      await apiFetch(`/api/menu/${item._id}`, {
-        method: 'PUT',
-        body: { available: !item.available },
-      });
+      await apiFetch(`/api/menu/${item._id}`, { method: 'PATCH', body: { available: !item.available } });
       mutate('/api/menu');
       toast.success(`${item.name} is now ${!item.available ? 'available' : 'unavailable'}`);
     } catch (error: any) {
       toast.error(error.message || 'Failed to update availability');
+    }
+  };
+
+  const updateStock = async (item: MenuItem, delta: number) => {
+    const current = typeof item.stock === 'number' ? item.stock : 0;
+    const next = Math.max(0, current + delta);
+    try {
+      await apiFetch(`/api/menu/${item._id}`, { method: 'PATCH', body: { stock: next, available: next > 0 } });
+      mutate('/api/menu');
+      toast.success(`${item.name} stock ${delta > 0 ? 'increased' : 'decreased'} to ${next}`);
+    } catch (error: any) {
+      toast.error(error.message || 'Failed to update stock');
     }
   };
 
@@ -122,7 +137,7 @@ export default function StaffMenuPage() {
           <button
             onClick={() => {
               setEditingItem(null);
-              setFormData({ name: '', description: '', price: '', category: '', available: true });
+          setFormData({ name: '', description: '', price: '', category: '', available: true, stock: '' });
               setShowAddModal(true);
             }}
             className="btn-primary h-10 px-4 rounded-lg font-bold inline-flex items-center gap-2 text-sm"
@@ -193,6 +208,7 @@ export default function StaffMenuPage() {
                   <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-text-muted-light dark:text-text-muted-dark">
                     Price
                   </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-text-muted-light dark:text-text-muted-dark">Stock</th>
                   <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-text-muted-light dark:text-text-muted-dark">
                     Availability
                   </th>
@@ -221,6 +237,13 @@ export default function StaffMenuPage() {
                     </td>
                     <td className="whitespace-nowrap px-6 py-4 text-sm text-text-muted-light dark:text-text-muted-dark">
                       ₹{item.price.toFixed(2)}
+                    </td>
+                    <td className="whitespace-nowrap px-6 py-4">
+                      <div className="flex items-center gap-2">
+                        <button onClick={() => updateStock(item, -1)} className="size-7 rounded bg-border-light dark:bg-border-dark hover:bg-zinc-200 dark:hover:bg-zinc-700 flex items-center justify-center">-</button>
+                        <span className="min-w-6 text-center text-sm font-semibold">{typeof item.stock === 'number' ? item.stock : 0}</span>
+                        <button onClick={() => updateStock(item, 1)} className="size-7 rounded bg-primary text-white hover:bg-primary/90 flex items-center justify-center">+</button>
+                      </div>
                     </td>
                     <td className="whitespace-nowrap px-6 py-4">
                       <label className="relative inline-flex cursor-pointer items-center">
@@ -314,6 +337,16 @@ export default function StaffMenuPage() {
                     onChange={(e) => setFormData({ ...formData, price: e.target.value })}
                     className="w-full px-4 py-2 rounded-lg border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark focus:outline-none focus:ring-2 focus:ring-primary"
                     required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-2">Stock (Qty)</label>
+                  <input
+                    type="number"
+                    min={0}
+                    value={formData.stock}
+                    onChange={(e) => setFormData({ ...formData, stock: e.target.value })}
+                    className="w-full px-4 py-2 rounded-lg border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark focus:outline-none focus:ring-2 focus:ring-primary"
                   />
                 </div>
                 <div>

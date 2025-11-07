@@ -8,7 +8,8 @@ router.post('/create-payment-intent', authenticate, requireMicrosoftForStudent, 
 router.post('/verify-payment', authenticate, requireMicrosoftForStudent, authorize('student', 'admin'), verifyPayment);
 router.post('/', authenticate, requireMicrosoftForStudent, authorize('student', 'admin'), createOrder);
 router.get('/user/:id', authenticate, requireMicrosoftForStudent, getOrdersForUser);
-router.get('/', authenticate, authorize('staff', 'admin'), getOrders);
+// Only staff operates the production board; admin can get reports via dedicated endpoints
+router.get('/', authenticate, authorize('staff'), getOrders);
 router.patch('/:id/status', authenticate, authorize('staff', 'admin'), updateOrderStatus);
 router.patch('/:id/assign-runner', authenticate, authorize('staff', 'admin'), assignRunner);
 router.get('/:id', authenticate, requireMicrosoftForStudent, getOrderById);
